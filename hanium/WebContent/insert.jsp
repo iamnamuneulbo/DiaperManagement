@@ -11,11 +11,9 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 
-
 	DeviceValDAO deviceValDAO = new DeviceValDAO();
 	
 	int res = deviceValDAO.insertValues(deviceVal.getDeviceID(), deviceVal.getTemperature(), deviceVal.getHumidity(), deviceVal.getGas());
-
 
 	PrintWriter script = response.getWriter();
 	if (res == -1) script.println("입력실패");
