@@ -33,8 +33,10 @@
 
 <body id="page-top">
 
-	<% String pageRoomNo = request.getParameter("roomNo"); %>
-	
+	<%
+		String pageRoomNo = request.getParameter("roomNo");
+	%>
+
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 
@@ -77,22 +79,35 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">2층:</h6>
 						<%
-					request.setCharacterEncoding("UTF-8");
-					
-					RoomDAO roomDAO = new RoomDAO();
-					ArrayList<Room> roomList = roomDAO.getRoomList();
-					
-					String roomNo;
-					int maxBed;
-					
-					for (Room rs : roomList) {
-						roomNo = rs.getRoomNo();
-						maxBed = rs.getMaxBed();
-						
-				%>
-						<a class="collapse-item active"
-							href="subPage.jsp?roomNo=<%=roomNo%>"><%=roomNo%>호(0/<%=maxBed%>)</a>
-						<%}%>
+							request.setCharacterEncoding("UTF-8");
+
+							DeviceValDAO deviceValDAO = new DeviceValDAO();
+							DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();
+							RoomDAO roomDAO = new RoomDAO();
+							ArrayList<Room> roomList = roomDAO.getRoomList();
+
+							String roomNo, active;
+							int maxBed, cnt;
+							
+
+							for (Room rs : roomList) {
+								roomNo = rs.getRoomNo();
+								maxBed = rs.getMaxBed();
+
+								ArrayList<String> RDList = deviceInfoDAO.getRoomDeviceList(roomNo);
+								cnt = RDList.size();
+								if (pageRoomNo.equals(roomNo)) {
+									active = "active";
+								}
+								else {
+									active = "";
+								}
+						%>
+						<a class="collapse-item <%=active%>"
+							href="subPage.jsp?roomNo=<%=roomNo%>"><%=roomNo%>호(<%=cnt%>/<%=maxBed%>)</a>
+						<%
+							}
+						%>
 					</div>
 				</div></li>
 
@@ -182,7 +197,8 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-4 text-gray-800"><%=pageRoomNo%>호</h1>
+					<h1 class="h3 mb-4 text-gray-800"><%=pageRoomNo%>호
+					</h1>
 
 				</div>
 				<!-- /.container-fluid -->
@@ -190,76 +206,68 @@
 				<div class="container">
 					<section class="row">
 						<%
-					request.setCharacterEncoding("UTF-8");
+							ArrayList<String> RDList = deviceInfoDAO.getRoomDeviceList(pageRoomNo);
 
-					DeviceValDAO deviceValDAO = new DeviceValDAO();
-					DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();
+							String deviceID, dataTime, tag, img, userName, ststeText;
+							int temperature, humidity, gas, state = -1;
 
-					ArrayList<String> RDList = deviceInfoDAO.getRoomDeviceList(pageRoomNo);
+							cnt = 0;
 
-					String deviceID, dataTime, tag, img, userName, ststeText;
-					int temperature, humidity, gas, state = -1, cnt = 0;
-					
-					for (String rs : RDList) {
-						DeviceVal deviceVal = deviceValDAO.getValue(rs);
-						
-						deviceID = deviceVal.getDeviceID();
-						dataTime = deviceVal.getDatatime();
-						temperature = deviceVal.getTemperature();
-						humidity = deviceVal.getHumidity();
-						gas = deviceVal.getGas();
-						state = deviceVal.getState();
+							for (String rs : RDList) {
+								DeviceVal deviceVal = deviceValDAO.getValue(rs);
 
-						userName = deviceInfoDAO.getUserName(deviceID);
-						
-						System.out.println(deviceID);
-						System.out.println(dataTime);
-						System.out.println(temperature);
-						System.out.println(humidity);
-						System.out.println(gas);
-						System.out.println(state);
-						System.out.println(userName);
-						
-						if (state == 0) {
-							tag = "success";
-							img = "far fa-smile";
-							ststeText = "좋음";
-						} else if (state == 1) {
-							tag = "warning";
-							img = "far fa-meh";
-							ststeText = "보통";
-						} else {
-							tag = "danger";
-							img = "far fa-frown";
-							ststeText = "나쁨";
-						}
-				%>
+								deviceID = deviceVal.getDeviceID();
+								dataTime = deviceVal.getDatatime();
+								temperature = deviceVal.getTemperature();
+								humidity = deviceVal.getHumidity();
+								gas = deviceVal.getGas();
+								state = deviceVal.getState();
+
+								userName = deviceInfoDAO.getUserName(deviceID);
+
+								if (state == 0) {
+									tag = "success";
+									img = "far fa-smile";
+									ststeText = "좋음";
+								} else if (state == 1) {
+									tag = "warning";
+									img = "far fa-meh";
+									ststeText = "보통";
+								} else {
+									tag = "danger";
+									img = "far fa-frown";
+									ststeText = "나쁨";
+								}
+						%>
 						<article class="col-5 mb-4">
 							<div class="card bg-<%=tag%> shadow mb-2">
 								<div class="card-header bg-<%=tag%> py-2">
 									<h6 class="m-0 font-weight-bold text-gray-100">
-										[<%=deviceID%>]<%=userName%></h6>
+										[<%=deviceID%>]
+										<%=userName%></h6>
 								</div>
 								<div class="card-body text-gray-100 py-2">
-									<i class="<%=img%> fa-3x float-right"></i>
 									<h4 class="card-title d-inline align-middle"><%=ststeText%></h4>
+									<i class="<%=img%> fa-3x float-right"></i>
 									<p class="card-text">
-										<br> <br> 온도<span class="float-right"><%=temperature%></span><br>
-										습도<span class="float-right"><%=humidity%></span><br> 가스<span
-											class="float-right"><%=gas%></span><br> <span
-											class="float-right"><%=dataTime%></span>
+										<br /> <i class="fas fa-fw fa-thermometer-half"></i> 온도<span
+											class="float-right"><%=temperature%></span><br> <i
+											class="fas fa-fw fa-tint"></i> 습도<span class="float-right"><%=humidity%></span><br>
+										<i class="fas fa-fw fa-wind"></i> 가스<span class="float-right"><%=gas%></span><br>
+										<span class="float-right"><%=dataTime%></span>
 									</p>
 								</div>
 							</div>
 						</article>
 						<%
-						if (cnt % 2 == 0) {%>
+							if (cnt % 2 == 0) {
+						%>
 						<article class="col-2 mb-2"></article>
-						<%							
-						}
-						cnt++;
-					}
-				%>
+						<%
+							}
+								cnt++;
+							}
+						%>
 						<article class="col-5 mb-2"></article>
 						<article class="col-2 mb-2">
 							<div class="card bg-secondary text-white shadow">

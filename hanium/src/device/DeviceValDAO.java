@@ -99,7 +99,8 @@ public class DeviceValDAO {
 			deviceVal.setTemperature(rs.getInt(3));
 			deviceVal.setHumidity(rs.getInt(4));
 			deviceVal.setGas(rs.getInt(5));
-			deviceVal.setValueID(rs.getInt(6));
+			deviceVal.setState(rs.getInt(6));
+			deviceVal.setValueID(rs.getInt(7));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,7 +116,7 @@ public class DeviceValDAO {
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			rs.next();
-			rs.getInt(1);
+			state = rs.getInt(1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
