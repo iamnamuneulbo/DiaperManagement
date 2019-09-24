@@ -15,7 +15,7 @@
 </head>
 <body>
 	<%
-		request.setCharacterEncoding("UTF-8");
+	request.setCharacterEncoding("UTF-8");
 
 	DeviceValDAO deviceValDAO = new DeviceValDAO();
 	DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();

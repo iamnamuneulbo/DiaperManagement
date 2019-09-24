@@ -87,7 +87,7 @@ public class DeviceValDAO {
 	}
 
 	public DeviceVal getValue(String deviceID) {
-		String SQL = "SELECT * FROM deviceVal WHERE deviceID="+ deviceID +"ORDER BY DATATIME DESC LIMIT 1";
+		String SQL = "SELECT * FROM deviceVal WHERE deviceID="+ deviceID +" ORDER BY DATATIME DESC LIMIT 1";
 		DeviceVal deviceVal = new DeviceVal();
 
 		try {
@@ -104,5 +104,21 @@ public class DeviceValDAO {
 			e.printStackTrace();
 		}
 		return deviceVal;
+	}
+	
+
+	public int getState(String deviceID) {
+		String SQL = "SELECT state FROM deviceVal WHERE deviceID="+ deviceID +" ORDER BY DATATIME DESC LIMIT 1";
+		int state = -1;
+
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			rs.next();
+			rs.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return state;
 	}
 }
