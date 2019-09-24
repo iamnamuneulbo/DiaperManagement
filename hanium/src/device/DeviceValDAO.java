@@ -43,8 +43,8 @@ public class DeviceValDAO {
 		}
 
 
-	public int insertValues(String deviceID, int temperature, int humidity, int gas) {
-		String SQL = "INSERT INTO deviceVal VALUES(?, ?, ?, ?, ?)";
+	public int insertValues(String deviceID, int temperature, int humidity, int gas, int state) {
+		String SQL = "INSERT INTO deviceVal VALUES(?, ?, ?, ?, ?, ?)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 
@@ -53,6 +53,7 @@ public class DeviceValDAO {
 			pstmt.setInt(3, temperature);
 			pstmt.setInt(4, humidity);
 			pstmt.setInt(5, gas);
+			pstmt.setInt(6, state);
 
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -60,8 +61,6 @@ public class DeviceValDAO {
 		}
 		return -1; // DB 오류
 	}
-	
-	
 	
 
 	public ArrayList<DeviceVal> getList() {
@@ -87,4 +86,23 @@ public class DeviceValDAO {
 		return list;
 	}
 
+	public DeviceVal getValue(String deviceID) {
+		String SQL = "SELECT * FROM deviceVal WHERE deviceID="+ deviceID +"ORDER BY DATATIME DESC LIMIT 1";
+		DeviceVal deviceVal = new DeviceVal();
+
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			rs.next();
+			deviceVal.setDeviceID(rs.getString(1));
+			deviceVal.setDatatime(rs.getString(2));
+			deviceVal.setTemperature(rs.getInt(3));
+			deviceVal.setHumidity(rs.getInt(4));
+			deviceVal.setGas(rs.getInt(5));
+			deviceVal.setValueID(rs.getInt(6));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return deviceVal;
+	}
 }

@@ -13,8 +13,12 @@
 
 	DeviceValDAO deviceValDAO = new DeviceValDAO();
 	
-	int res = deviceValDAO.insertValues(deviceVal.getDeviceID(), deviceVal.getTemperature(), deviceVal.getHumidity(), deviceVal.getGas());
-
+	int temperature = deviceVal.getTemperature();
+	int humidity = deviceVal.getHumidity();
+	int gas = deviceVal.getGas();
+	int sum = temperature + humidity + gas;	
+	int res = deviceValDAO.insertValues(deviceVal.getDeviceID(), temperature, humidity, gas, sum);
+	
 	PrintWriter script = response.getWriter();
 	if (res == -1) script.println("입력실패");
 	else script.println(res);

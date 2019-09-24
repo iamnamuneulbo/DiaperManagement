@@ -23,7 +23,7 @@ public class RoomDAO {
 		}
 	}
 
-	public ArrayList<Room> getList() {
+	public ArrayList<Room> getRoomList() {
 		String SQL = "SELECT * FROM room ORDER BY roomNo";
 		ArrayList<Room> list = new ArrayList<Room>();
 		
