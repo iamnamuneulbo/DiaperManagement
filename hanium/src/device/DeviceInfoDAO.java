@@ -24,7 +24,7 @@ public class DeviceInfoDAO {
 	}
 
 	public ArrayList<DeviceInfo> getList() {
-		String SQL = "SELECT * FROM device ORDER BY deviceID DESC";
+		String SQL = "SELECT * FROM device ORDER BY bedNo";
 		ArrayList<DeviceInfo> list = new ArrayList<DeviceInfo>();
 		
 		try {
@@ -34,6 +34,8 @@ public class DeviceInfoDAO {
 				DeviceInfo deviceInfo = new DeviceInfo();
 				deviceInfo.setDeviceID(rs.getString(1));
 				deviceInfo.setUserName(rs.getString(2));
+				deviceInfo.setRoomNo(rs.getString(3));
+				deviceInfo.setBedNo(rs.getString(4));
 				list.add(deviceInfo);
 			}
 		} catch (Exception e) {

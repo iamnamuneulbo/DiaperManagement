@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="device.RoomDAO"%>
+<%@ page import="device.Room"%>
 <%@ page import="device.DeviceInfoDAO"%>
 <%@ page import="device.DeviceValDAO"%>
 <%@ page import="device.DeviceVal"%>
@@ -73,6 +75,24 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">2층:</h6>
 						<a class="collapse-item active" href="subPage.jsp">201호</a>
+
+						<%
+					request.setCharacterEncoding("UTF-8");
+					
+					RoomDAO roomDAO = new RoomDAO();
+					ArrayList<Room> roomList = roomDAO.getList();
+					
+					String roomNo;
+					int maxBed;
+					
+					for (Room rs : roomList) {
+						roomNo = rs.getRoomNo();
+						maxBed = rs.getMaxBed();
+						
+				%>
+						<a class="collapse-item active"
+							href="subPage.jsp?roomNo=<%=roomNo%>"><%=roomNo%>호(0/<%=maxBed%>)</a>
+						<%}%>
 					</div>
 				</div></li>
 
@@ -151,54 +171,6 @@
 									</div>
 								</form>
 							</div></li>
-
-						<!-- Nav Item - Alerts -->
-						<li class="nav-item dropdown no-arrow mx-1"><a
-							class="nav-link dropdown-toggle" href="#" id="alertsDropdown"
-							role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> <i class="fas fa-bell fa-fw"></i> <!-- Counter - Alerts -->
-								<span class="badge badge-danger badge-counter">3+</span>
-						</a> <!-- Dropdown - Alerts -->
-							<div
-								class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-								aria-labelledby="alertsDropdown">
-								<h6 class="dropdown-header">Alerts Center</h6>
-								<a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="mr-3">
-										<div class="icon-circle bg-primary">
-											<i class="fas fa-file-alt text-white"></i>
-										</div>
-									</div>
-									<div>
-										<div class="small text-gray-500">December 12, 2019</div>
-										<span class="font-weight-bold">A new monthly report is
-											ready to download!</span>
-									</div>
-								</a> <a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="mr-3">
-										<div class="icon-circle bg-success">
-											<i class="fas fa-donate text-white"></i>
-										</div>
-									</div>
-									<div>
-										<div class="small text-gray-500">December 7, 2019</div>
-										$290.29 has been deposited into your account!
-									</div>
-								</a> <a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="mr-3">
-										<div class="icon-circle bg-warning">
-											<i class="fas fa-exclamation-triangle text-white"></i>
-										</div>
-									</div>
-									<div>
-										<div class="small text-gray-500">December 2, 2019</div>
-										Spending Alert: We've noticed unusually high spending for your
-										account.
-									</div>
-								</a> <a class="dropdown-item text-center small text-gray-500"
-									href="#">Show All Alerts</a>
-							</div></li>
-
 						<div class="topbar-divider d-none d-sm-block"></div>
 
 					</ul>
@@ -210,7 +182,7 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-4 text-gray-800">201호</h1>
+					<h1 class="h3 mb-4 text-gray-800"><%=request.getParameter("roomNo")%></h1>
 
 				</div>
 				<!-- /.container-fluid -->
@@ -281,9 +253,7 @@
 						<article class="col-5 mb-2"></article>
 						<article class="col-2 mb-2">
 							<div class="card bg-secondary text-white shadow">
-								<div class="card-body text-center">
-									입구
-								</div>
+								<div class="card-body text-center">입구</div>
 							</div>
 						</article>
 						<article class="col-2 mb-2"></article>
