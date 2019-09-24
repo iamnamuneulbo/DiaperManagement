@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="device.RoomDAO"%>
 <%@ page import="device.Room"%>
+<%@ page import="device.DeviceInfoDAO"%>
+<%@ page import="device.DeviceValDAO"%>
 <%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html lang="ko">
@@ -72,22 +74,23 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">2층:</h6>
 						<%
-					request.setCharacterEncoding("UTF-8");
-					
-					RoomDAO roomDAO = new RoomDAO();
-					ArrayList<Room> roomList = roomDAO.getRoomList();
-					
-					String roomNo;
-					int maxBed;
-					
-					for (Room rs : roomList) {
-						roomNo = rs.getRoomNo();
-						maxBed = rs.getMaxBed();
-						
-				%>
+							request.setCharacterEncoding("UTF-8");
+
+							RoomDAO roomDAO = new RoomDAO();
+							ArrayList<Room> roomList = roomDAO.getRoomList();
+
+							String roomNo;
+							int maxBed;
+
+							for (Room rs : roomList) {
+								roomNo = rs.getRoomNo();
+								maxBed = rs.getMaxBed();
+						%>
 						<a class="collapse-item active"
 							href="subPage.jsp?roomNo=<%=roomNo%>"><%=roomNo%>호(0/<%=maxBed%>)</a>
-						<%}%>
+						<%
+							}
+						%>
 					</div>
 				</div></li>
 
@@ -187,21 +190,39 @@
 					<!-- Content Row -->
 					<section class="row">
 						<%
+							DeviceValDAO deviceValDAO = new DeviceValDAO();
+							DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();
+							int state;
+							String roomState = "success";
 							for (Room rs : roomList) {
 								roomNo = rs.getRoomNo();
 								maxBed = rs.getMaxBed();
-								
 
+								ArrayList<String> RDList = deviceInfoDAO.getRoomDeviceList(roomNo);
+								for (String device : RDList) {
+									state = deviceValDAO.getState(device);
+									if (state == 0) {
+										roomState = "success";
+									}
+									else if (state == 1) {
+										roomState = "warning";
+									}
+									else {
+										roomState = "danger";
+										break;
+									}
+								}
 						%>
 						<article class="col-5 mb-4">
 							<a href="subPage.jsp?roomNo=<%=roomNo%>">
-								<div class="card border-left-danger shadow h-100 py-2">
+								<div class="card border-left-<%=roomState%> shadow h-100 py-2">
 									<div class="card-body">
 										<div class="row no-gutters align-items-center">
 											<div class="col mr-2">
 												<div
 													class="text-xs font-weight-bold text-primary text-uppercase mb-1"></div>
-												<div class="h5 mb-0 font-weight-bold text-gray-800"><%=roomNo%>호(0/<%=maxBed%>)</div>
+												<div class="h5 mb-0 font-weight-bold text-gray-800"><%=roomNo%>호(0/<%=maxBed%>)
+												</div>
 											</div>
 											<div class="col-auto">
 												<i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -215,127 +236,6 @@
 							}
 						%>
 
-
-
-
-
-
-
-
-
-
-
-
-
-						<article class="col-5 mb-4">
-							<a href="subPage.jsp?room=201">
-								<div class="card border-left-danger shadow h-100 py-2">
-									<div class="card-body">
-										<div class="row no-gutters align-items-center">
-											<div class="col mr-2">
-												<div
-													class="text-xs font-weight-bold text-primary text-uppercase mb-1"></div>
-												<div class="h5 mb-0 font-weight-bold text-gray-800">201호</div>
-											</div>
-											<div class="col-auto">
-												<i class="fas fa-calendar fa-2x text-gray-300"></i>
-											</div>
-										</div>
-									</div>
-								</div>
-							</a>
-						</article>
-
-						<article class="col-2 mb-4"></article>
-
-						<article class="col-5 mb-4">
-							<div class="card border-left-danger shadow h-100 py-2">
-								<div class="card-body">
-									<div class="row no-gutters align-items-center">
-										<div class="col mr-2">
-											<div
-												class="text-xs font-weight-bold text-primary text-uppercase mb-1"></div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">202호</div>
-										</div>
-										<div class="col-auto">
-											<i class="fas fa-calendar fa-2x text-gray-300"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-						</article>
-
-						<article class="col-5 mb-4">
-							<div class="card border-left-success shadow h-100 py-2">
-								<div class="card-body">
-									<div class="row no-gutters align-items-center">
-										<div class="col mr-2">
-											<div
-												class="text-xs font-weight-bold text-success text-uppercase mb-1"></div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">203호</div>
-										</div>
-										<div class="col-auto">
-											<i class="fas fa-calendar fa-2x text-gray-300"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-						</article>
-
-						<article class="col-2 mb-4"></article>
-
-						<article class="col-5 mb-4">
-							<div class="card border-left-success shadow h-100 py-2">
-								<div class="card-body">
-									<div class="row no-gutters align-items-center">
-										<div class="col mr-2">
-											<div
-												class="text-xs font-weight-bold text-success text-uppercase mb-1"></div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">204호</div>
-										</div>
-										<div class="col-auto">
-											<i class="fas fa-calendar fa-2x text-gray-300"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-						</article>
-
-						<article class="col-5 mb-4">
-							<div class="card border-left-success shadow h-100 py-2">
-								<div class="card-body">
-									<div class="row no-gutters align-items-center">
-										<div class="col mr-2">
-											<div
-												class="text-xs font-weight-bold text-success text-uppercase mb-1"></div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">205호</div>
-										</div>
-										<div class="col-auto">
-											<i class="fas fa-calendar fa-2x text-gray-300"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-						</article>
-
-						<article class="col-2 mb-4"></article>
-
-						<article class="col-5 mb-4">
-							<div class="card border-left-warning shadow h-100 py-2">
-								<div class="card-body">
-									<div class="row no-gutters align-items-center">
-										<div class="col mr-2">
-											<div
-												class="text-xs font-weight-bold text-warning text-uppercase mb-1"></div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">206호</div>
-										</div>
-										<div class="col-auto">
-											<i class="fas fa-calendar fa-2x text-gray-300"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-						</article>
 
 
 					</section>

@@ -45,7 +45,7 @@ public class DeviceInfoDAO {
 	}
 	
 	public ArrayList<String> getRoomDeviceList(String roomNo) {
-		String SQL = "SELECT deviceID FROM device WHERE roomNo=" + roomNo + "ORDER BY bedNo";
+		String SQL = "SELECT deviceID FROM device WHERE roomNo=" + roomNo + " ORDER BY bedNo";
 		ArrayList<String> list = new ArrayList<String>();
 		
 		try {

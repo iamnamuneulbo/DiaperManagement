@@ -198,8 +198,8 @@
 					ArrayList<String> RDList = deviceInfoDAO.getRoomDeviceList(pageRoomNo);
 
 					String deviceID, dataTime, tag, img, userName, ststeText;
-					int temperature, humidity, gas, state = 0, cnt = 0;
-
+					int temperature, humidity, gas, state = -1, cnt = 0;
+					
 					for (String rs : RDList) {
 						DeviceVal deviceVal = deviceValDAO.getValue(rs);
 						
@@ -208,9 +208,18 @@
 						temperature = deviceVal.getTemperature();
 						humidity = deviceVal.getHumidity();
 						gas = deviceVal.getGas();
+						state = deviceVal.getState();
 
 						userName = deviceInfoDAO.getUserName(deviceID);
-
+						
+						System.out.println(deviceID);
+						System.out.println(dataTime);
+						System.out.println(temperature);
+						System.out.println(humidity);
+						System.out.println(gas);
+						System.out.println(state);
+						System.out.println(userName);
+						
 						if (state == 0) {
 							tag = "success";
 							img = "far fa-smile";
