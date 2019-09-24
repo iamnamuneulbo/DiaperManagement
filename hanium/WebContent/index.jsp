@@ -76,18 +76,23 @@
 						<%
 							request.setCharacterEncoding("UTF-8");
 
+							DeviceValDAO deviceValDAO = new DeviceValDAO();
+							DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();
 							RoomDAO roomDAO = new RoomDAO();
 							ArrayList<Room> roomList = roomDAO.getRoomList();
 
-							String roomNo;
-							int maxBed;
+							String roomNo, active = "";
+							int maxBed, cnt;
 
 							for (Room rs : roomList) {
 								roomNo = rs.getRoomNo();
 								maxBed = rs.getMaxBed();
+
+								ArrayList<String> RDList = deviceInfoDAO.getRoomDeviceList(roomNo);
+								cnt = RDList.size();
 						%>
-						<a class="collapse-item active"
-							href="subPage.jsp?roomNo=<%=roomNo%>"><%=roomNo%>호(0/<%=maxBed%>)</a>
+						<a class="collapse-item <%=active%>"
+							href="subPage.jsp?roomNo=<%=roomNo%>"><%=roomNo%>호(<%=cnt%>/<%=maxBed%>)</a>
 						<%
 							}
 						%>
@@ -190,8 +195,6 @@
 					<!-- Content Row -->
 					<section class="row">
 						<%
-							DeviceValDAO deviceValDAO = new DeviceValDAO();
-							DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();
 							int state;
 							String roomState = "success";
 							for (Room rs : roomList) {
@@ -199,15 +202,14 @@
 								maxBed = rs.getMaxBed();
 
 								ArrayList<String> RDList = deviceInfoDAO.getRoomDeviceList(roomNo);
+								cnt = RDList.size();
 								for (String device : RDList) {
 									state = deviceValDAO.getState(device);
 									if (state == 0) {
 										roomState = "success";
-									}
-									else if (state == 1) {
+									} else if (state == 1) {
 										roomState = "warning";
-									}
-									else {
+									} else {
 										roomState = "danger";
 										break;
 									}
@@ -221,7 +223,7 @@
 											<div class="col mr-2">
 												<div
 													class="text-xs font-weight-bold text-primary text-uppercase mb-1"></div>
-												<div class="h5 mb-0 font-weight-bold text-gray-800"><%=roomNo%>호(0/<%=maxBed%>)
+												<div class="h5 mb-0 font-weight-bold text-gray-800"><%=roomNo%>호(<%=cnt%>/<%=maxBed%>)
 												</div>
 											</div>
 											<div class="col-auto">
