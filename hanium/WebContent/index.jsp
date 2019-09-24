@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="device.RoomDAO"%>
+<%@ page import="device.Room"%>
+<%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -68,7 +71,23 @@
 					aria-labelledby="headingPages" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">2층:</h6>
-						<a class="collapse-item" href="subPage.jsp">Sub Page</a>
+						<%
+					request.setCharacterEncoding("UTF-8");
+					
+					RoomDAO roomDAO = new RoomDAO();
+					ArrayList<Room> roomList = roomDAO.getRoomList();
+					
+					String roomNo;
+					int maxBed;
+					
+					for (Room rs : roomList) {
+						roomNo = rs.getRoomNo();
+						maxBed = rs.getMaxBed();
+						
+				%>
+						<a class="collapse-item active"
+							href="subPage.jsp?roomNo=<%=roomNo%>"><%=roomNo%>호(0/<%=maxBed%>)</a>
+						<%}%>
 					</div>
 				</div></li>
 
@@ -167,7 +186,47 @@
 
 					<!-- Content Row -->
 					<section class="row">
-					
+						<%
+							for (Room rs : roomList) {
+								roomNo = rs.getRoomNo();
+								maxBed = rs.getMaxBed();
+								
+
+						%>
+						<article class="col-5 mb-4">
+							<a href="subPage.jsp?roomNo=<%=roomNo%>">
+								<div class="card border-left-danger shadow h-100 py-2">
+									<div class="card-body">
+										<div class="row no-gutters align-items-center">
+											<div class="col mr-2">
+												<div
+													class="text-xs font-weight-bold text-primary text-uppercase mb-1"></div>
+												<div class="h5 mb-0 font-weight-bold text-gray-800"><%=roomNo%>호(0/<%=maxBed%>)</div>
+											</div>
+											<div class="col-auto">
+												<i class="fas fa-calendar fa-2x text-gray-300"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+							</a>
+						</article>
+						<%
+							}
+						%>
+
+
+
+
+
+
+
+
+
+
+
+
+
 						<article class="col-5 mb-4">
 							<a href="subPage.jsp?room=201">
 								<div class="card border-left-danger shadow h-100 py-2">
@@ -277,8 +336,8 @@
 								</div>
 							</div>
 						</article>
-						
-						
+
+
 					</section>
 
 					<!-- Content Row -->

@@ -33,6 +33,8 @@
 
 <body id="page-top">
 
+	<% String pageRoomNo = request.getParameter("roomNo"); %>
+	
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 
@@ -74,13 +76,11 @@
 					aria-labelledby="headingPages" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">2층:</h6>
-						<a class="collapse-item active" href="subPage.jsp">201호</a>
-
 						<%
 					request.setCharacterEncoding("UTF-8");
 					
 					RoomDAO roomDAO = new RoomDAO();
-					ArrayList<Room> roomList = roomDAO.getList();
+					ArrayList<Room> roomList = roomDAO.getRoomList();
 					
 					String roomNo;
 					int maxBed;
@@ -182,7 +182,7 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-4 text-gray-800"><%=request.getParameter("roomNo")%></h1>
+					<h1 class="h3 mb-4 text-gray-800"><%=pageRoomNo%>호</h1>
 
 				</div>
 				<!-- /.container-fluid -->
@@ -193,35 +193,36 @@
 					request.setCharacterEncoding("UTF-8");
 
 					DeviceValDAO deviceValDAO = new DeviceValDAO();
-					ArrayList<DeviceVal> list = deviceValDAO.getList();
-
 					DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();
 
-					String deviceID, dataTime, tag, state, img, userName;
-					int temperature, humidity, gas, sum, cnt = 0;
+					ArrayList<String> RDList = deviceInfoDAO.getRoomDeviceList(pageRoomNo);
 
-					for (DeviceVal rs : list) {
-						deviceID = rs.getDeviceID();
-						dataTime = rs.getDatatime();
-						temperature = rs.getTemperature();
-						humidity = rs.getHumidity();
-						gas = rs.getGas();
-						sum = temperature + humidity + gas;
+					String deviceID, dataTime, tag, img, userName, ststeText;
+					int temperature, humidity, gas, state = 0, cnt = 0;
+
+					for (String rs : RDList) {
+						DeviceVal deviceVal = deviceValDAO.getValue(rs);
+						
+						deviceID = deviceVal.getDeviceID();
+						dataTime = deviceVal.getDatatime();
+						temperature = deviceVal.getTemperature();
+						humidity = deviceVal.getHumidity();
+						gas = deviceVal.getGas();
 
 						userName = deviceInfoDAO.getUserName(deviceID);
 
-						if (sum < 80) {
+						if (state == 0) {
 							tag = "success";
 							img = "far fa-smile";
-							state = "좋음";
-						} else if (sum < 100) {
+							ststeText = "좋음";
+						} else if (state == 1) {
 							tag = "warning";
 							img = "far fa-meh";
-							state = "보통";
+							ststeText = "보통";
 						} else {
 							tag = "danger";
 							img = "far fa-frown";
-							state = "나쁨";
+							ststeText = "나쁨";
 						}
 				%>
 						<article class="col-5 mb-4">
@@ -232,7 +233,7 @@
 								</div>
 								<div class="card-body text-gray-100 py-2">
 									<i class="<%=img%> fa-3x float-right"></i>
-									<h4 class="card-title d-inline align-middle"><%=state%></h4>
+									<h4 class="card-title d-inline align-middle"><%=ststeText%></h4>
 									<p class="card-text">
 										<br> <br> 온도<span class="float-right"><%=temperature%></span><br>
 										습도<span class="float-right"><%=humidity%></span><br> 가스<span

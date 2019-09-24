@@ -44,6 +44,24 @@ public class DeviceInfoDAO {
 		return list;
 	}
 	
+	public ArrayList<String> getRoomDeviceList(String roomNo) {
+		String SQL = "SELECT deviceID FROM device WHERE roomNo=" + roomNo + "ORDER BY bedNo";
+		ArrayList<String> list = new ArrayList<String>();
+		
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				list.add(rs.getString(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
+	
 	public String getUserName(String deviceID) {
 		String userName = null;
 		String SQL = "SELECT userName FROM device WHERE deviceID = " + deviceID;

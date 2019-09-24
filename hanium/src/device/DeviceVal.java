@@ -6,6 +6,7 @@ public class DeviceVal {
 	private int temperature;
 	private int humidity;
 	private int gas;
+	private int state;
 	private int valueID;
 	
 	public String getDeviceID() {
@@ -37,6 +38,12 @@ public class DeviceVal {
 	}
 	public void setGas(int gas) {
 		this.gas = gas;
+	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
 	}
 	public int getValueID() {
 		return valueID;
