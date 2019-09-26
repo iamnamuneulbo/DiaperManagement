@@ -153,10 +153,7 @@
 
 					<!-- Topbar Navbar -->
 					<ul class="navbar-nav ml-auto">
-
 						<div class="topbar-divider d-none d-sm-block"></div>
-
-
 					</ul>
 
 				</nav>
@@ -194,8 +191,8 @@
 									}
 								}
 						%>
-						<article class="col-5 mb-4" data-toggle="popover"
-							data-placement="bottom" data-html="true" title="<%=roomNo%>호"
+						<article id="<%=roomNo%>" class="col-5 mb-4" data-toggle="popover"
+							data-placement="right" data-html="true" title="<%=roomNo%>호"
 							data-content='<jsp:include page="room_card_preview.jsp"><jsp:param name="roomNo" value="<%=roomNo%>" /></jsp:include>'>
 							<div class="card border-left-<%=roomState%> shadow h-100 py-2">
 								<div class="card-body">
@@ -223,8 +220,6 @@
 								roomCnt++;
 							}
 						%>
-
-
 					</section>
 
 					<!-- Content Row -->
@@ -260,28 +255,51 @@
 				<!-- End of Content Wrapper -->
 
 			</div>
-			<!-- End of Page Wrapper -->
+		</div>
+	</div>
+	<!-- End of Page Wrapper -->
 
-			<!-- Scroll to Top Button-->
-			<a class="scroll-to-top rounded" href="#page-top"> <i
-				class="fas fa-angle-up"></i>
-			</a>
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
 
-			<!-- Bootstrap core JavaScript-->
-			<script src="vendor/jquery/jquery.min.js"></script>
-			<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-			<!-- Core plugin JavaScript-->
-			<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-			<!-- Custom scripts for all pages-->
-			<script src="js/sb-admin-2.min.js"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
 
-			<script>
-				$(document).ready(function() {
-					$('[data-toggle="popover"]').popover();
-				});
-			</script>
+	<script>
+	var pop_timer;
+	
+		$(document).ready(function() {
+			$('[data-toggle="popover"]').popover();
+		});
+		
+		$('[data-toggle="popover"]').on('click', function (e) {
+			clearTimeout(pop_timer);
+		    $('[data-toggle="popover"]').not(this).popover('hide');
+		    pop_timer = setTimeout(function () {
+		        $('[data-toggle="popover"]').popover('hide');
+		    }, 2000);
+		});
+		
+		
+	</script>
+
 </body>
 
+<style>
+.popover {
+	width: 50%;
+	max-width: 50%;
+	position: relative;
+    margin: auto;
+}
+</style>
 </html>
