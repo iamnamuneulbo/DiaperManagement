@@ -93,7 +93,7 @@
 								cnt = RDList.size();
 						%>
 						<a class="collapse-item <%=active%>"
-							href="subPage.jsp?roomNo=<%=roomNo%>"><%=roomNo%>호(<%=cnt%>/<%=maxBed%>)</a>
+							href="room_page.jsp?roomNo=<%=roomNo%>"><%=roomNo%>호(<%=cnt%>/<%=maxBed%>)</a>
 						<%
 							}
 						%>
@@ -194,7 +194,7 @@
 								}
 						%>
 						<article class="col-5 mb-4">
-							<a href="subPage.jsp?roomNo=<%=roomNo%>">
+							<a href="room_page.jsp?roomNo=<%=roomNo%>" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">
 								<div class="card border-left-<%=roomState%> shadow h-100 py-2">
 									<div class="card-body">
 										<div class="row no-gutters align-items-center">

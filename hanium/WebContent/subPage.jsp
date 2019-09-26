@@ -109,7 +109,8 @@
 							}
 						%>
 					</div>
-				</div></li>
+				</div>
+			</li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider d-none d-md-block">
