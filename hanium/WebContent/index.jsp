@@ -242,13 +242,7 @@
 					<!-- End of Main Content -->
 
 					<!-- Footer -->
-					<footer class="sticky-footer bg-white">
-						<div class="container my-auto">
-							<div class="copyright text-center my-auto">
-								<span>Copyright &copy; 한이음 스마트 기저귀 2019</span>
-							</div>
-						</div>
-					</footer>
+					<jsp:include page="footer.jsp"></jsp:include>
 					<!-- End of Footer -->
 
 				</div>
@@ -275,18 +269,18 @@
 	<script src="js/sb-admin-2.min.js"></script>
 
 	<script>
-	var pop_timer;
-	
+		var pop_timer;
+
 		$(document).ready(function() {
 			$('[data-toggle="popover"]').popover();
 		});
-		
-		$('[data-toggle="popover"]').on('click', function (e) {
+
+		$('[data-toggle="popover"]').on('click', function(e) {
 			clearTimeout(pop_timer);
-		    $('[data-toggle="popover"]').not(this).popover('hide');
-		    pop_timer = setTimeout(function () {
-		        $('[data-toggle="popover"]').popover('hide');
-		    }, 2000);
+			$('[data-toggle="popover"]').not(this).popover('hide');
+			pop_timer = setTimeout(function() {
+				$('[data-toggle="popover"]').popover('hide');
+			}, 2000);
 		});
 	</script>
 
