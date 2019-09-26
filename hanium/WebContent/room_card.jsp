@@ -15,7 +15,6 @@
 	<%
 		String pageRoomNo = request.getParameter("roomNo");
 	%>
-	<section class="container">
 		<article class="row">
 			<%
 				request.setCharacterEncoding("UTF-8");
@@ -90,7 +89,6 @@
 			</div>
 			<div class="col-5 mb-2"></div>
 		</article>
-	</section>
 
 </body>
 </html>

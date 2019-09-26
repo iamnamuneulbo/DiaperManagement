@@ -288,8 +288,6 @@
 		        $('[data-toggle="popover"]').popover('hide');
 		    }, 2000);
 		});
-		
-		
 	</script>
 
 </body>
@@ -299,7 +297,7 @@
 	width: 50%;
 	max-width: 50%;
 	position: relative;
-    margin: auto;
+	margin: auto;
 }
 </style>
 </html>
