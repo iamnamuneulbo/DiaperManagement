@@ -53,7 +53,8 @@
 						ststeText = "나쁨";
 					}
 			%>
-			<section class="col-5 mb-4">
+
+			<div class="col-5 mb-4">
 				<div class="card bg-<%=tag%> shadow mb-2">
 					<div class="card-header bg-<%=tag%> py-2">
 						<h6 class="m-0 font-weight-bold text-gray-100">
@@ -65,31 +66,33 @@
 						<i class="<%=img%> fa-3x float-right"></i>
 						<p class="card-text">
 							<br /> <i class="fas fa-fw fa-thermometer-half"></i> 온도<span
-								class="float-right"><%=temperature%></span><br> <i
-								class="fas fa-fw fa-tint"></i> 습도<span class="float-right"><%=humidity%></span><br>
-							<i class="fas fa-fw fa-wind"></i> 가스<span class="float-right"><%=gas%></span><br>
+								class="float-right"><%=temperature%></span><br /> <i
+								class="fas fa-fw fa-tint"></i> 습도<span class="float-right"><%=humidity%></span><br />
+							<i class="fas fa-fw fa-wind"></i> 가스<span class="float-right"><%=gas%></span><br />
 							<span class="float-right"><%=dataTime%></span>
 						</p>
 					</div>
 				</div>
-			</section>
-			<%
-				if (cardCnt % 2 == 0) {
-			%>
-			<section class="col-2 mb-2"></section>
-			<%
-				}
-					cardCnt++;
-				}
-			%>
-			<section class="col-5 mb-2"></section>
-			<section class="col-2 mb-2">
-				<div class="card bg-secondary text-white shadow">
-					<div class="card-body text-center">입구</div>
-				</div>
-			</section>
-			<section class="col-2 mb-2"></section>
-		</article>
+			</div>
+	</div>
+
+	<%
+		if (cardCnt % 2 == 0) {
+	%>
+	<section class="col-2 mb-2"></section>
+	<%
+		}
+			cardCnt++;
+		}
+	%>
+	<section class="col-5 mb-2"></section>
+	<section class="col-2 mb-2">
+		<div class="card bg-secondary text-white shadow">
+			<div class="card-body text-center">입구</div>
+		</div>
+	</section>
+	<section class="col-2 mb-2"></section>
+	</article>
 	</div>
 
 </body>
