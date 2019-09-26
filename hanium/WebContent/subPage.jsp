@@ -39,10 +39,10 @@
 
 	<!-- Page Wrapper -->
 	<div id="wrapper">
-
+		<nav>
 		<!-- Sidebar -->
 		<ul
-			class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+			class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled"
 			id="accordionSidebar">
 
 			<!-- Sidebar - Brand -->
@@ -142,6 +142,7 @@
 			</div>
 
 		</ul>
+		</nav>
 		<!-- End of Sidebar -->
 
 		<!-- Content Wrapper -->
