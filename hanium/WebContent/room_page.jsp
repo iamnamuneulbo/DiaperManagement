@@ -176,19 +176,22 @@
 
 				<!-- Begin Page Content -->
 
-	<div class="container-fluid">
+				<div class="container-fluid">
 
-		<!-- Page Heading -->
-		<h1 class="h3 mb-4 text-gray-800"><%=pageRoomNo%>호
-		</h1>
+					<!-- Page Heading -->
+					<h1 class="h3 mb-4 text-gray-800"><%=pageRoomNo%>호
+					</h1>
 
-	</div>
-	<!-- /.container-fluid -->
+				</div>
+				<!-- /.container-fluid -->
 
-				<jsp:include page="room_card.jsp">
-					<jsp:param name="roomNo" value="<%=pageRoomNo%>" />
-				</jsp:include>
+				<section class="container">
+				
+					<jsp:include page="room_card.jsp">
+						<jsp:param name="roomNo" value="<%=pageRoomNo%>" />
+					</jsp:include>
 
+				</section>
 
 				<!-- End of Main Content -->
 
