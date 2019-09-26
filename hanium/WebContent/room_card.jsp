@@ -88,7 +88,7 @@
 					<div class="card-body text-center">입구</div>
 				</div>
 			</section>
-			<section class="col-2 mb-2"></section>
+			<section class="col-5 mb-2"></section>
 		</article>
 	</div>
 
