@@ -15,7 +15,7 @@
 	<%
 		String pageRoomNo = request.getParameter("roomNo");
 	%>
-	<div class="container">
+	<section class="container">
 		<article class="row">
 			<%
 				request.setCharacterEncoding("UTF-8");
@@ -53,7 +53,7 @@
 						ststeText = "나쁨";
 					}
 			%>
-			<section class="col-5 mb-4">
+			<div class="col-5 mb-4">
 				<div class="card bg-<%=tag%> shadow mb-2">
 					<div class="card-header bg-<%=tag%> py-2">
 						<h6 class="m-0 font-weight-bold text-gray-100">
@@ -72,25 +72,25 @@
 						</p>
 					</div>
 				</div>
-			</section>
+			</div>
 			<%
 				if (cardCnt % 2 == 0) {
 			%>
-			<section class="col-2 mb-2"></section>
+			<div class="col-2 mb-2"></div>
 			<%
 				}
 					cardCnt++;
 				}
 			%>
-			<section class="col-5 mb-2"></section>
-			<section class="col-2 mb-2">
+			<div class="col-5 mb-2"></div>
+			<div class="col-2 mb-2">
 				<div class="card bg-secondary text-white shadow">
 					<div class="card-body text-center">입구</div>
 				</div>
-			</section>
-			<section class="col-5 mb-2"></section>
+			</div>
+			<div class="col-5 mb-2"></div>
 		</article>
-	</div>
+	</section>
 
 </body>
 </html>
