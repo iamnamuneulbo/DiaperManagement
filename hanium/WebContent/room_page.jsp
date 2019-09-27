@@ -104,7 +104,7 @@
 									}
 							%>
 							<a class="collapse-item <%=active%>"
-								href="subPage.jsp?roomNo=<%=roomNo%>"><%=roomNo%>호(<%=cnt%>/<%=maxBed%>)</a>
+								href="room_page.jsp?roomNo=<%=roomNo%>"><%=roomNo%>호(<%=cnt%>/<%=maxBed%>)</a>
 							<%
 								}
 								deviceValDAO = null;
