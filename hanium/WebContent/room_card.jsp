@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="device.RoomDAO"%>
 <%@ page import="device.Room"%>
 <%@ page import="device.DeviceInfoDAO"%>
@@ -20,8 +21,10 @@
 				DeviceValDAO deviceValDAO2 = new DeviceValDAO();
 				DeviceInfoDAO deviceInfoDAO2 = new DeviceInfoDAO();
 				ArrayList<String> RDList = deviceInfoDAO2.getRoomDeviceList(pageRoomNo);
+				SimpleDateFormat lformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				SimpleDateFormat sformat = new SimpleDateFormat("MM/dd HH:mm");
 
-				String deviceID, dataTime, tag, img, userName, ststeText;
+				String deviceID, dataTime, dataTimeF, tag, img, userName, ststeText;
 				int temperature, humidity, gas, state = -1, cardCnt = 0;
 
 				for (String rs : RDList) {
@@ -35,6 +38,7 @@
 					state = deviceVal.getState();
 
 					userName = deviceInfoDAO2.getUserName(deviceID);
+					dataTimeF = sformat.format(lformat.parse(dataTime));
 
 					if (state == 0) {
 						tag = "success";
@@ -65,7 +69,7 @@
 								class="float-right"><%=temperature%></span><br> <i
 								class="fas fa-fw fa-tint"></i> 습도<span class="float-right"><%=humidity%></span><br>
 							<i class="fas fa-fw fa-wind"></i> 가스<span class="float-right"><%=gas%></span><br>
-							<span class="float-right"><%=dataTime%></span>
+							<span class="float-right"><%=dataTimeF%></span>
 						</p>
 					</div>
 				</div>
