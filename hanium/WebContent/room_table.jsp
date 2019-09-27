@@ -8,112 +8,80 @@
 <%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-</head>
 <body>
 	<%
 		String pageRoomNo = request.getParameter("roomNo");
 	%>
-		<article class="row">
-			<%
-				request.setCharacterEncoding("UTF-8");
+	<article class="row">
+		<!-- DataTales Example -->
+		<div class="col">
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">기저귀 교환 기록</h6>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-bordered" id="dataTable" width="100%"
+							cellspacing="0">
+							<thead>
+								<tr>
+									<th>이름</th>
+									<th>최근 교체 일시</th>
+									<th>평균 온도</th>
+									<th>평균 습도</th>
+									<th>평균 가스</th>
+									<th>평균 교체 주기</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>이름</th>
+									<th>최근 교체 일시</th>
+									<th>평균 온도</th>
+									<th>평균 습도</th>
+									<th>평균 가스</th>
+									<th>평균 교체 주기</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								<%
+									request.setCharacterEncoding("UTF-8");
 
-				DeviceValDAO deviceValDAO2 = new DeviceValDAO();
-				DeviceInfoDAO deviceInfoDAO2 = new DeviceInfoDAO();
-				ArrayList<String> RDList = deviceInfoDAO2.getRoomDeviceList(pageRoomNo);
+									DeviceValDAO deviceValDAO3 = new DeviceValDAO();
+									DeviceInfoDAO deviceInfoDAO3 = new DeviceInfoDAO();
+									ArrayList<String> RDList = deviceInfoDAO3.getRoomDeviceList(pageRoomNo);
 
-				String deviceID, dataTime, tag, img, userName, ststeText;
-				int temperature, humidity, gas, state = -1, cardCnt = 0;
+									String deviceID, dataTime, tag, img, userName, ststeText;
+									int temperature, humidity, gas;
 
-				for (String rs : RDList) {
-					DeviceVal deviceVal = deviceValDAO2.getValue(rs);
+									for (String rs : RDList) {
+										DeviceVal deviceVal = deviceValDAO3.getValue(rs);
 
-					deviceID = deviceVal.getDeviceID();
-					dataTime = deviceVal.getDatatime();
-					temperature = deviceVal.getTemperature();
-					humidity = deviceVal.getHumidity();
-					gas = deviceVal.getGas();
-					state = deviceVal.getState();
-
-					userName = deviceInfoDAO2.getUserName(deviceID);
-
-					if (state == 0) {
-						tag = "success";
-						img = "far fa-smile";
-						ststeText = "좋음";
-					} else if (state == 1) {
-						tag = "warning";
-						img = "far fa-meh";
-						ststeText = "보통";
-					} else {
-						tag = "danger";
-						img = "far fa-frown";
-						ststeText = "나쁨";
-					}
-				}
-			%>
-			
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Position</th>
-                      <th>Office</th>
-                      <th>Age</th>
-                      <th>Start date</th>
-                      <th>Salary</th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                      <th>Name</th>
-                      <th>Position</th>
-                      <th>Office</th>
-                      <th>Age</th>
-                      <th>Start date</th>
-                      <th>Salary</th>
-                    </tr>
-                  </tfoot>
-                  <tbody>
-                    <tr>
-                      <td>Tiger Nixon</td>
-                      <td>System Architect</td>
-                      <td>Edinburgh</td>
-                      <td>61</td>
-                      <td>2011/04/25</td>
-                      <td>$320,800</td>
-                    </tr>
-                    <tr>
-                      <td>Garrett Winters</td>
-                      <td>Accountant</td>
-                      <td>Tokyo</td>
-                      <td>63</td>
-                      <td>2011/07/25</td>
-                      <td>$170,750</td>
-                    </tr>
-                    <tr>
-                      <td>Ashton Cox</td>
-                      <td>Junior Technical Author</td>
-                      <td>San Francisco</td>
-                      <td>66</td>
-                      <td>2009/01/12</td>
-                      <td>$86,000</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-		</article>
+										deviceID = deviceVal.getDeviceID();
+										dataTime = deviceVal.getDatatime();
+										temperature = deviceVal.getTemperature();
+										humidity = deviceVal.getHumidity();
+										gas = deviceVal.getGas();
+										userName = deviceInfoDAO3.getUserName(deviceID);
+								%>
+								<tr>
+									<td><%=userName%></td>
+									<td><%=dataTime%></td>
+									<td><%=temperature%></td>
+									<td><%=humidity%></td>
+									<td><%=gas%></td>
+									<td><%=dataTime%></td>
+								</tr>
+								<%
+									}
+								%>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
 
 </body>
 </html>

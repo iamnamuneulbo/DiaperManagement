@@ -8,13 +8,11 @@
 <%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-</head>
 <body>
 	<%
 		String pageRoomNo = request.getParameter("roomNo");
 	%>
+	<div class="container">
 		<article class="row">
 			<%
 				request.setCharacterEncoding("UTF-8");
@@ -75,20 +73,20 @@
 			<%
 				if (cardCnt % 2 == 0) {
 			%>
-			<div class="col-2 mb-2"></div>
+			<div class="col-2 mb-4"></div>
 			<%
 				}
 					cardCnt++;
 				}
 			%>
-			<div class="col-5 mb-2"></div>
-			<div class="col-2 mb-2">
+			<div class="col-5 mb-4"></div>
+			<div class="col-2 mb-4">
 				<div class="card bg-secondary text-white shadow">
 					<div class="card-body text-center">입구</div>
 				</div>
 			</div>
-			<div class="col-5 mb-2"></div>
+			<div class="col-5 mb-4"></div>
 		</article>
-
+	</div>
 </body>
 </html>

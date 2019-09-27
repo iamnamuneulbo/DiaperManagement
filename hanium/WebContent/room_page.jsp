@@ -186,8 +186,7 @@
 				</div>
 				<!-- /.container-fluid -->
 
-				<section class="container">
-
+				<section class="container-fluid">
 					<jsp:include page="room_card.jsp">
 						<jsp:param name="roomNo" value="<%=pageRoomNo%>" />
 					</jsp:include>
