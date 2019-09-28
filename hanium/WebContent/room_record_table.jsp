@@ -16,7 +16,7 @@
 		<div class="col-xl-4 col-lg-5">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold text-primary">기저귀 교환 기록</h6>
+					<h6 class="m-0 font-weight-bold text-primary">기저귀 교체 기록</h6>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
