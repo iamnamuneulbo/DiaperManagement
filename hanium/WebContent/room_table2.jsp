@@ -13,10 +13,10 @@
 		String pageRoomNo = request.getParameter("roomNo");
 	%>
 		<!-- DataTales Example -->
-		<div class="col-xl-8 col-lg-7">
+		<div class="col-xl-4 col-lg-5">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold text-primary">환자별 통계</h6>
+					<h6 class="m-0 font-weight-bold text-primary">기저귀 교환 기록</h6>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -25,47 +25,46 @@
 							<thead>
 								<tr>
 									<th>이름</th>
-									<th>평균 온도</th>
-									<th>평균 습도</th>
-									<th>평균 가스</th>
-									<th>평균 교체 주기</th>
+									<th>교체 일시</th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
 									<th>이름</th>
-									<th>평균 온도</th>
-									<th>평균 습도</th>
-									<th>평균 가스</th>
-									<th>평균 교체 주기</th>
+									<th>교체 일시</th>
 								</tr>
 							</tfoot>
 							<tbody>
 								<%
 									request.setCharacterEncoding("UTF-8");
 
-									DeviceValDAO deviceValDAO3 = new DeviceValDAO();
-									DeviceInfoDAO deviceInfoDAO3 = new DeviceInfoDAO();
-									ArrayList<String> RDList = deviceInfoDAO3.getRoomDeviceList(pageRoomNo);
+									DeviceValDAO deviceValDAO4 = new DeviceValDAO();
+									DeviceInfoDAO deviceInfoDAO4 = new DeviceInfoDAO();
+									ArrayList<String> RDList = deviceInfoDAO4.getRoomDeviceList(pageRoomNo);
 
 									String deviceID, dataTime, tag, img, userName, ststeText;
 									int temperature, humidity, gas;
 
 									for (String rs : RDList) {
-										DeviceVal deviceVal = deviceValDAO3.getValue(rs);
+										DeviceVal deviceVal = deviceValDAO4.getValue(rs);
 
 										deviceID = deviceVal.getDeviceID();
 										dataTime = deviceVal.getDatatime();
 										temperature = deviceVal.getTemperature();
 										humidity = deviceVal.getHumidity();
 										gas = deviceVal.getGas();
-										userName = deviceInfoDAO3.getUserName(deviceID);
+										userName = deviceInfoDAO4.getUserName(deviceID);
 								%>
 								<tr>
 									<td><%=userName%></td>
-									<td><%=temperature%></td>
-									<td><%=humidity%></td>
-									<td><%=gas%></td>
+									<td><%=dataTime%></td>
+								</tr>
+								<tr>
+									<td><%=userName%></td>
+									<td><%=dataTime%></td>
+								</tr>
+								<tr>
+									<td><%=userName%></td>
 									<td><%=dataTime%></td>
 								</tr>
 								<%
@@ -77,6 +76,6 @@
 				</div>
 			</div>
 		</div>
-		
+
 </body>
 </html>
