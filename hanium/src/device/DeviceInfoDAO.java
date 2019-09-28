@@ -43,6 +43,25 @@ public class DeviceInfoDAO {
 		}
 		return list;
 	}
+
+	public ArrayList<DeviceInfo> getRoomDeviceBed(String roomNo) {
+		String SQL = "SELECT deviceID, bedNo FROM device WHERE roomNo=" + roomNo + " ORDER BY bedNo";
+		ArrayList<DeviceInfo> list = new ArrayList<DeviceInfo>();
+		
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				DeviceInfo deviceInfo = new DeviceInfo();
+				deviceInfo.setDeviceID(rs.getString(1));
+				deviceInfo.setBedNo(rs.getString(2));
+				list.add(deviceInfo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
 	public ArrayList<String> getRoomDeviceList(String roomNo) {
 		String SQL = "SELECT deviceID FROM device WHERE roomNo=" + roomNo + " ORDER BY bedNo";
