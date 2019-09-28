@@ -121,7 +121,7 @@
 								class="collapse-item" href="cards.html">Cards</a>
 						</div>
 					</div></li>
-					
+
 				<!-- Divider -->
 				<hr class="sidebar-divider">
 

@@ -36,8 +36,10 @@
 <body id="page-top">
 	<%
 		String pageRoomNo = request.getParameter("roomNo");
+		if (pageRoomNo == null) {
+			response.sendRedirect("404.jsp");
+		} else {
 	%>
-
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<nav>
@@ -83,34 +85,34 @@
 							<%
 								request.setCharacterEncoding("UTF-8");
 
-								DeviceValDAO deviceValDAO = new DeviceValDAO();
-								DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();
-								RoomDAO roomDAO = new RoomDAO();
-								ArrayList<Room> roomList = roomDAO.getRoomList();
+									DeviceValDAO deviceValDAO = new DeviceValDAO();
+									DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();
+									RoomDAO roomDAO = new RoomDAO();
+									ArrayList<Room> roomList = roomDAO.getRoomList();
 
-								String roomNo, active;
-								int maxBed, cnt;
+									String roomNo, active;
+									int maxBed, cnt;
 
-								for (Room rs : roomList) {
-									roomNo = rs.getRoomNo();
-									maxBed = rs.getMaxBed();
+									for (Room rs : roomList) {
+										roomNo = rs.getRoomNo();
+										maxBed = rs.getMaxBed();
 
-									ArrayList<String> RDList = deviceInfoDAO.getRoomDeviceList(roomNo);
-									cnt = RDList.size();
-									if (pageRoomNo.equals(roomNo)) {
-										active = "active";
-									} else {
-										active = "";
-									}
+										ArrayList<String> RDList = deviceInfoDAO.getRoomDeviceList(roomNo);
+										cnt = RDList.size();
+										if (pageRoomNo.equals(roomNo)) {
+											active = "active";
+										} else {
+											active = "";
+										}
 							%>
 							<a class="collapse-item <%=active%>"
 								href="room_page.jsp?roomNo=<%=roomNo%>"><%=roomNo%>호(<%=cnt%>/<%=maxBed%>)</a>
 							<%
 								}
-								deviceValDAO = null;
-								deviceInfoDAO = null;
-								roomDAO = null;
-								roomList = null;
+									deviceValDAO = null;
+									deviceInfoDAO = null;
+									roomDAO = null;
+									roomList = null;
 							%>
 						</div>
 					</div></li>
@@ -191,10 +193,15 @@
 						<jsp:param name="roomNo" value="<%=pageRoomNo%>" />
 					</jsp:include>
 
-					<jsp:include page="room_table.jsp">
-						<jsp:param name="roomNo" value="<%=pageRoomNo%>" />
-					</jsp:include>
+					<article class="row">
+						<jsp:include page="room_table2.jsp">
+							<jsp:param name="roomNo" value="<%=pageRoomNo%>" />
+						</jsp:include>
 
+						<jsp:include page="room_table.jsp">
+							<jsp:param name="roomNo" value="<%=pageRoomNo%>" />
+						</jsp:include>
+					</article>
 				</section>
 
 				<!-- End of Main Content -->
@@ -231,6 +238,17 @@
 
 	<!-- Page level custom scripts -->
 	<script src="js/demo/datatables-demo.js"></script>
+	
+	<script>
+		$(document).ready(function() {
+		    $('table.display').DataTable();
+		} );
+	</script>
+
+
+	<%
+		}
+	%>
 </body>
 
 </html>
