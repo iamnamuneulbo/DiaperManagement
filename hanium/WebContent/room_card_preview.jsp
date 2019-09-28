@@ -101,13 +101,13 @@
 		%>
 	</div>
 	<div class="row">
-		<div class="col-5 mb-4 d-none d-md-block"></div>
-		<div class="col-2 mb-4 d-none d-md-block">
+		<div class="col-5 mb-2 d-none d-md-block"></div>
+		<div class="col-2 mb-2 d-none d-md-block">
 			<div class="card bg-secondary text-white shadow d-none d-md-block">
 				<div class="card-body text-center d-none d-md-block">입구</div>
 			</div>
 		</div>
-		<div class="col-5 mb-4 d-none d-md-block"></div>
+		<div class="col-5 mb-2 d-none d-md-block"></div>
 	</div>
 </body>
 </html>

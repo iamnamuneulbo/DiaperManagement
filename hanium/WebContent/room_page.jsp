@@ -16,6 +16,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
+<meta http-equiv="refresh" content="60">
 
 <title>스마트 기저귀 - 병실</title>
 
