@@ -4,6 +4,7 @@
 <%@ page import="device.RoomDAO"%>
 <%@ page import="device.Room"%>
 <%@ page import="device.DeviceInfoDAO"%>
+<%@ page import="device.DeviceInfo"%>
 <%@ page import="device.DeviceValDAO"%>
 <%@ page import="device.DeviceVal"%>
 <%@ page import="java.util.ArrayList"%>
@@ -20,15 +21,15 @@
 
 				DeviceValDAO deviceValDAO2 = new DeviceValDAO();
 				DeviceInfoDAO deviceInfoDAO2 = new DeviceInfoDAO();
-				ArrayList<String> RDList = deviceInfoDAO2.getRoomDeviceList(pageRoomNo);
+				ArrayList<DeviceInfo> RDList = deviceInfoDAO2.getRoomDeviceBed(pageRoomNo); // 병실의 기기 목록 가져오기
 				SimpleDateFormat lformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				SimpleDateFormat sformat = new SimpleDateFormat("MM/dd HH:mm");
 
-				String deviceID, dataTime, dataTimeF, tag, img, userName, ststeText;
-				int temperature, humidity, gas, state = -1, cardCnt = 0;
+				String deviceID, dataTime, dataTimeF, tag, img, userName, ststeText, bed;
+				int temperature, humidity, gas, state = -1, cardCnt = 0, bedNo;
 
-				for (String rs : RDList) {
-					DeviceVal deviceVal = deviceValDAO2.getValue(rs);
+				for (DeviceInfo rs : RDList) {
+					DeviceVal deviceVal = deviceValDAO2.getValue(rs.getDeviceID()); // 기기 아이디-수집한 값 가져오기 
 
 					deviceID = deviceVal.getDeviceID();
 					dataTime = deviceVal.getDatatime();
@@ -36,6 +37,8 @@
 					humidity = deviceVal.getHumidity();
 					gas = deviceVal.getGas();
 					state = deviceVal.getState();
+					bed = rs.getBedNo();
+					bedNo = Integer.valueOf(bed);
 
 					userName = deviceInfoDAO2.getUserName(deviceID);
 					dataTimeF = sformat.format(lformat.parse(dataTime));
@@ -53,13 +56,29 @@
 						img = "far fa-frown";
 						ststeText = "나쁨";
 					}
+
+					while ((cardCnt + 1) != bedNo) { // 카드 위치와 침대 위치가 일치하지 않으면 빈 공간 출력
+			%>
+			<div class="col-5 mb-4"></div>
+			<%
+				cardCnt++;
+						if (cardCnt % 2 == 1) {
+			%>
+			<div class="col-2 mb-4"></div>
+			<%
+				}
+					}
+					cardCnt++;
 			%>
 			<div class="col-5 mb-4">
 				<div class="card bg-<%=tag%> shadow mb-2">
 					<div class="card-header bg-<%=tag%> py-2">
 						<h6 class="m-0 font-weight-bold text-gray-100">
-							[<%=deviceID%>]
-							<%=userName%></h6>
+							<i class="fas fa-microchip"></i> [<%=deviceID%>] | <i
+								class="fas fa-user"></i>
+							<%=userName%>
+							| <i class="fas fa-procedures"></i> [<%=bed%>]
+						</h6>
 					</div>
 					<div class="card-body text-gray-100 py-2">
 						<h4 class="card-title d-inline align-middle"><%=ststeText%></h4>
@@ -75,14 +94,15 @@
 				</div>
 			</div>
 			<%
-				if (cardCnt % 2 == 0) {
+				if (cardCnt % 2 == 1) { // 병상 사이 여백 출력
 			%>
 			<div class="col-2 mb-4"></div>
 			<%
 				}
-					cardCnt++;
 				}
 			%>
+		</article>
+		<article class="row">
 			<div class="col-5 mb-4"></div>
 			<div class="col-2 mb-4">
 				<div class="card bg-secondary text-white shadow">
