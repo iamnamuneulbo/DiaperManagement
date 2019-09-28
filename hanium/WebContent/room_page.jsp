@@ -194,11 +194,11 @@
 					</jsp:include>
 
 					<article class="row">
-						<jsp:include page="room_table2.jsp">
+						<jsp:include page="room_record_table.jsp">
 							<jsp:param name="roomNo" value="<%=pageRoomNo%>" />
 						</jsp:include>
 
-						<jsp:include page="room_table.jsp">
+						<jsp:include page="room_statistic_table.jsp">
 							<jsp:param name="roomNo" value="<%=pageRoomNo%>" />
 						</jsp:include>
 					</article>
