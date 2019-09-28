@@ -73,11 +73,10 @@
 			<div class="card bg-<%=tag%> shadow mb-2">
 				<div class="card-header bg-<%=tag%> py-2">
 					<h6 class="m-0 font-weight-bold text-gray-100">
-							<i class="fas fa-microchip"></i> [<%=deviceID%>] | <i
-								class="fas fa-user"></i>
-							<%=userName%>
-							| <i class="fas fa-procedures"></i> [<%=bed%>]
-						</h6>
+							<i class="fas fa-procedures"></i> [<%=bed%>] | 
+							<i class="fas fa-user"></i> <%=userName%> | 
+							<i class="fas fa-microchip"></i> [<%=deviceID%>]
+					</h6>
 				</div>
 				<div class="card-body text-gray-100 py-2">
 					<h4 class="card-title d-inline align-middle"><%=ststeText%></h4>
