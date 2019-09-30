@@ -119,10 +119,14 @@
 			var para = window.location.search;
 			var sel = $('li.nav-item a[href="' + url + '"]');
 
-			if (sel.length > 0) {
-				sel.parent().addClass('active');
-			} else if ($('a.collapse-item[href="' + url + '"]').length > 0) {
+			sel.parent().addClass('active');
+
+			if ($('a.collapse-item[href="' + url + '"]').length > 0) {
 				sel = $('a.collapse-item[href="' + url + '"]');
+
+				console.log("시작");
+				console.log(sel);
+
 				sel.closest('li').addClass('active');
 				sel.addClass('active');
 				sel.closest('div.collapse').addClass('show');
