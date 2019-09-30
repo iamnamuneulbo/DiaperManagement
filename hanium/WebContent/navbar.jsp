@@ -117,20 +117,20 @@
 		$(document).ready(function() {
 			var url = window.location.pathname;
 			var para = window.location.search;
-			var sel = $('li.nav-item a[href="' + url + '"]');
-
-			sel.parent().addClass('active');
+			var sel;
 
 			if ($('a.collapse-item[href="' + url + '"]').length > 0) {
 				sel = $('a.collapse-item[href="' + url + '"]');
 				sel.closest('li').addClass('active');
 				sel.addClass('active');
 				sel.closest('div.collapse').addClass('show');
-			} else {
+			} else if ($('a.collapse-item[href="' + url + para + '"]').length > 0){
 				sel = $('a.collapse-item[href="' + url + para + '"]');
 				sel.closest('li').addClass('active');
 				sel.addClass('active');
 				sel.closest('div.collapse').addClass('show');
+			} else {
+				$('li.nav-item a[href="' + url + '"]').parent().addClass('active');
 			}
 		});
 	</script>
