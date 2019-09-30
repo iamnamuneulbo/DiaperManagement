@@ -12,12 +12,17 @@
 	request.setCharacterEncoding("UTF-8");
 
 	DeviceValDAO deviceValDAO = new DeviceValDAO();
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 7be855f038fe59fe10808d87e52b2a84f22af487
 	String deviceID = deviceVal.getDeviceID();
 	int temperature = deviceVal.getTemperature();
 	int humidity = deviceVal.getHumidity();
 	int gas = deviceVal.getGas();
 	int sum = temperature + humidity + gas;
+<<<<<<< HEAD
 
 	if (sum > 60) {
 		deviceVal.setState(2);
@@ -36,3 +41,25 @@
 	else
 		script.println(res);
 %>
+=======
+	
+	if (sum > 60) {
+		deviceVal.setState(2);
+	}
+	else if (sum > 40) {
+		deviceVal.setState(1);
+	}
+	else {
+		deviceVal.setState(0);
+	}
+	
+	int res = deviceValDAO.insertValues(deviceVal);
+	
+	PrintWriter script = response.getWriter();
+
+	if (res == -1) script.println("입력실패");
+	else script.println(res);
+	
+	
+%>
+>>>>>>> 7be855f038fe59fe10808d87e52b2a84f22af487
