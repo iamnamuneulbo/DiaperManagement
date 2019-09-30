@@ -94,7 +94,7 @@
 		<%
 			if (cardCnt % 2 == 1) { // 병상 사이 여백 출력
 		%>
-		<div class="col-2 mb-4"></div>
+		<div class="col-2 mb-4 d-none d-md-block"></div>
 		<%
 			}
 			}
