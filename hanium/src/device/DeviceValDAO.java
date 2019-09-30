@@ -6,10 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-
 public class DeviceValDAO {
-	// dao : 데이터베이스 접근 객체의 약자로서
-	// 실질적으로 db에서 회원정보 불러오거나 db에 회원정보 넣을때
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
@@ -22,38 +19,37 @@ public class DeviceValDAO {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
-			e.printStackTrace(); // 오류가 무엇인지 출력
+			e.printStackTrace();
 		}
 	}
-	
 
-	//현재의 시간을 가져오는 함수  
-		public String getDate() {
-			String SQL = "SELECT NOW()";
-			try {
-				PreparedStatement pstmt = conn.prepareStatement(SQL);
-				rs = pstmt.executeQuery();
-				if (rs.next()) {
-					return rs.getString(1);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+	// 현재의 시간을 가져오는 함수
+	public String getDate() {
+		String SQL = "SELECT NOW()";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getString(1);
 			}
-			return ""; // 데이터베이스 오류
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return ""; // DB 오류
+	}
 
+	public int insertValues(DeviceVal deviceVal) {
+		String SQL = "INSERT INTO deviceVal VALUES(?, ?, ?, ?, ?, ?, NULL)";
 
-	public int insertValues(String deviceID, int temperature, int humidity, int gas, int state) {
-		String SQL = "INSERT INTO deviceVal VALUES(?, ?, ?, ?, ?, ?)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 
-			pstmt.setString(1, deviceID);
+			pstmt.setString(1, deviceVal.getDeviceID());
 			pstmt.setString(2, getDate());
-			pstmt.setInt(3, temperature);
-			pstmt.setInt(4, humidity);
-			pstmt.setInt(5, gas);
-			pstmt.setInt(6, state);
+			pstmt.setInt(3, deviceVal.getTemperature());
+			pstmt.setInt(4, deviceVal.getHumidity());
+			pstmt.setInt(5, deviceVal.getGas());
+			pstmt.setInt(6, deviceVal.getState());
 
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -61,12 +57,11 @@ public class DeviceValDAO {
 		}
 		return -1; // DB 오류
 	}
-	
 
 	public ArrayList<DeviceVal> getList() {
 		String SQL = "SELECT * FROM deviceVal ORDER BY DATATIME DESC LIMIT 4";
 		ArrayList<DeviceVal> list = new ArrayList<DeviceVal>();
-		
+
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
@@ -87,7 +82,7 @@ public class DeviceValDAO {
 	}
 
 	public DeviceVal getValue(String deviceID) {
-		String SQL = "SELECT * FROM deviceVal WHERE deviceID="+ deviceID +" ORDER BY DATATIME DESC LIMIT 1";
+		String SQL = "SELECT * FROM deviceVal WHERE deviceID=" + deviceID + " ORDER BY DATATIME DESC LIMIT 1";
 		DeviceVal deviceVal = new DeviceVal();
 
 		try {
@@ -106,10 +101,9 @@ public class DeviceValDAO {
 		}
 		return deviceVal;
 	}
-	
 
 	public int getState(String deviceID) {
-		String SQL = "SELECT state FROM deviceVal WHERE deviceID="+ deviceID +" ORDER BY DATATIME DESC LIMIT 1";
+		String SQL = "SELECT state FROM deviceVal WHERE deviceID=" + deviceID + " ORDER BY DATATIME DESC LIMIT 1";
 		int state = -1;
 
 		try {
