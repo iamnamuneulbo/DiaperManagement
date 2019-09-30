@@ -16,7 +16,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-<meta http-equiv="refresh" content="60">
+<meta http-equiv="refresh" content="180">
 <title>스마트 기저귀 - Dashboard</title>
 
 <!-- Custom fonts for this template-->
@@ -37,103 +37,7 @@
 	<div id="wrapper">
 
 		<!-- Sidebar -->
-		<nav>
-			<ul
-				class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled"
-				id="accordionSidebar">
-
-				<!-- Sidebar - Brand -->
-				<a
-					class="sidebar-brand d-flex align-items-center justify-content-center"
-					href="index.jsp">
-					<div class="sidebar-brand-icon rotate-n-15">
-						<i class="fas fa-laugh-wink"></i>
-					</div>
-					<div class="sidebar-brand-text mx-3">스마트 기저귀</div>
-				</a>
-
-				<!-- Divider -->
-				<hr class="sidebar-divider my-0">
-
-				<!-- Nav Item - Dashboard -->
-				<li class="nav-item active"><a class="nav-link"
-					href="index.jsp"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>Dashboard</span>
-				</a></li>
-
-				<!-- Divider -->
-				<hr class="sidebar-divider">
-
-				<!-- Heading -->
-				<div class="sidebar-heading">ROOMS</div>
-
-				<!-- Nav Item - Pages Collapse Menu -->
-				<li class="nav-item"><a class="nav-link collapsed" href="#"
-					data-toggle="collapse" data-target="#collapsePages"
-					aria-expanded="true" aria-controls="collapsePages"> <i
-						class="fas fa-fw fa-folder"></i> <span>병실 목록</span>
-				</a>
-					<div id="collapsePages" class="collapse"
-						aria-labelledby="headingPages" data-parent="#accordionSidebar">
-						<div class="bg-white py-2 collapse-inner rounded">
-							<h6 class="collapse-header">2층:</h6>
-							<%
-								request.setCharacterEncoding("UTF-8");
-
-								DeviceValDAO deviceValDAO = new DeviceValDAO();
-								DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();
-								RoomDAO roomDAO = new RoomDAO();
-								ArrayList<Room> roomList = roomDAO.getRoomList();
-
-								String roomNo, active = "";
-								int maxBed, cnt;
-
-								for (Room rs : roomList) {
-									roomNo = rs.getRoomNo();
-									maxBed = rs.getMaxBed();
-
-									ArrayList<String> RDList = deviceInfoDAO.getRoomDeviceList(roomNo);
-									cnt = RDList.size();
-							%>
-							<a class="collapse-item <%=active%>"
-								href="room_page.jsp?roomNo=<%=roomNo%>"><%=roomNo%>호(<%=cnt%>/<%=maxBed%>)</a>
-							<%
-								}
-							%>
-						</div>
-					</div></li>
-
-				<!-- Divider -->
-				<hr class="sidebar-divider d-none d-md-block">
-
-				<!-- Heading -->
-				<div class="sidebar-heading">SETTINGS</div>
-
-				<!-- Nav Item - Pages Collapse Menu -->
-				<li class="nav-item"><a class="nav-link collapsed" href="#"
-					data-toggle="collapse" data-target="#collapseTwo"
-					aria-expanded="true" aria-controls="collapseTwo"> <i
-						class="fas fa-fw fa-cog"></i> <span>관리 페이지</span>
-				</a>
-					<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-						data-parent="#accordionSidebar">
-						<div class="bg-white py-2 collapse-inner rounded">
-							<h6 class="collapse-header">SETTINGS:</h6>
-							<a class="collapse-item" href="patients_admin.jsp">환자 관리</a>
-							<a class="collapse-item" href="rooms_admin.jsp">병실 관리</a>
-							<a class="collapse-item" href="devices_admin.jsp">기기 관리</a>
-						</div>
-					</div></li>
-
-				<!-- Divider -->
-				<hr class="sidebar-divider">
-
-				<!-- Sidebar Toggler (Sidebar) -->
-				<div class="text-center d-none d-md-inline">
-					<button class="rounded-circle border-0" id="sidebarToggle"></button>
-				</div>
-
-			</ul>
-		</nav>
+		<jsp:include page="navbar.jsp"></jsp:include>
 		<!-- End of Sidebar -->
 
 		<!-- Content Wrapper -->
@@ -172,16 +76,24 @@
 					<!-- Content Row -->
 					<section class="row">
 						<%
+							DeviceValDAO deviceValDAO2 = new DeviceValDAO();
+							DeviceInfoDAO deviceInfoDAO2 = new DeviceInfoDAO();
+							RoomDAO roomDAO2 = new RoomDAO();
+							ArrayList<Room> roomList2 = roomDAO2.getRoomList();
+
+							String roomNo, active = "";
+							int maxBed, cnt;
+
 							int state, roomCnt = 0;
 							String roomState = "success";
-							for (Room rs : roomList) {
+							for (Room rs : roomList2) {
 								roomNo = rs.getRoomNo();
 								maxBed = rs.getMaxBed();
 
-								ArrayList<String> RDList = deviceInfoDAO.getRoomDeviceList(roomNo);
+								ArrayList<String> RDList = deviceInfoDAO2.getRoomDeviceList(roomNo);
 								cnt = RDList.size();
 								for (String device : RDList) {
-									state = deviceValDAO.getState(device);
+									state = deviceValDAO2.getState(device);
 									if (state == 0) {
 										roomState = "success";
 									} else if (state == 1) {
@@ -269,11 +181,11 @@
 	<!-- Custom scripts for all pages-->
 	<script src="js/sb-admin-2.min.js"></script>
 
-	<script>
+	<script type="text/javascript">
 		var pop_timer;
 
 		$(document).ready(function() {
-			$('[data-toggle="popover"]').popover();
+			$('[data-toggle="popover"]').popover();			
 		});
 
 		$('[data-toggle="popover"]').on('click', function(e) {

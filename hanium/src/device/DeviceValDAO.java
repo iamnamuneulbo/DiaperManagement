@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DeviceValDAO {
@@ -16,7 +17,7 @@ public class DeviceValDAO {
 			String dbURL = "jdbc:mysql://3.13.163.79:3306/han_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul";
 			String dbID = "admin";
 			String dbPassword = "ifnt0719";
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -34,6 +35,8 @@ public class DeviceValDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		return ""; // DB 오류
 	}
@@ -54,6 +57,8 @@ public class DeviceValDAO {
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		return -1; // DB 오류
 	}
@@ -77,6 +82,8 @@ public class DeviceValDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		return list;
 	}
@@ -98,6 +105,8 @@ public class DeviceValDAO {
 			deviceVal.setValueID(rs.getInt(7));
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		return deviceVal;
 	}
@@ -113,7 +122,20 @@ public class DeviceValDAO {
 			state = rs.getInt(1);
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		return state;
+	}
+	
+	private void close() {
+		try {
+			if (rs != null)
+				rs.close();
+			if (pstmt != null)
+				pstmt.close();
+		} catch (SQLException e) {
+			//logger.debug("\n[ DBConnection Close Exception ] " + e.toString());
+		}
 	}
 }
