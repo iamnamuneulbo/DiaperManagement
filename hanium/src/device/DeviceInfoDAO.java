@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DeviceInfoDAO {
@@ -16,7 +17,7 @@ public class DeviceInfoDAO {
 			String dbURL = "jdbc:mysql://3.13.163.79:3306/han_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul";
 			String dbID = "admin";
 			String dbPassword = "ifnt0719";
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
 			e.printStackTrace(); // 오류가 무엇인지 출력
@@ -26,7 +27,7 @@ public class DeviceInfoDAO {
 	public ArrayList<DeviceInfo> getList() {
 		String SQL = "SELECT * FROM device ORDER BY bedNo";
 		ArrayList<DeviceInfo> list = new ArrayList<DeviceInfo>();
-		
+
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
@@ -40,6 +41,8 @@ public class DeviceInfoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		return list;
 	}
@@ -47,7 +50,7 @@ public class DeviceInfoDAO {
 	public ArrayList<DeviceInfo> getRoomDeviceBed(String roomNo) {
 		String SQL = "SELECT deviceID, bedNo FROM device WHERE roomNo=" + roomNo + " ORDER BY bedNo";
 		ArrayList<DeviceInfo> list = new ArrayList<DeviceInfo>();
-		
+
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
@@ -59,14 +62,16 @@ public class DeviceInfoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		return list;
 	}
-	
+
 	public ArrayList<String> getRoomDeviceList(String roomNo) {
 		String SQL = "SELECT deviceID FROM device WHERE roomNo=" + roomNo + " ORDER BY bedNo";
 		ArrayList<String> list = new ArrayList<String>();
-		
+
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
@@ -75,16 +80,16 @@ public class DeviceInfoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		return list;
 	}
-	
-	
-	
+
 	public String getUserName(String deviceID) {
 		String userName = null;
 		String SQL = "SELECT userName FROM device WHERE deviceID = " + deviceID;
-		
+
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
@@ -93,7 +98,20 @@ public class DeviceInfoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		return userName;
+	}
+
+	private void close() {
+		try {
+			if (rs != null)
+				rs.close();
+			if (pstmt != null)
+				pstmt.close();
+		} catch (SQLException e) {
+			// logger.debug("\n[ DBConnection Close Exception ] " + e.toString());
+		}
 	}
 }
