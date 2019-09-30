@@ -29,8 +29,9 @@
 			<hr class="sidebar-divider my-0">
 
 			<!-- Nav Item - Dashboard -->
-			<li class="nav-item"><a class="nav-link" href="/hanium/index.jsp"> <i
-					class="fas fa-fw fa-tachometer-alt"></i> <span>Dashboard</span>
+			<li class="nav-item"><a class="nav-link"
+				href="/hanium/index.jsp"> <i class="fas fa-fw fa-tachometer-alt"></i>
+					<span>Dashboard</span>
 			</a></li>
 
 			<!-- Divider -->
@@ -67,7 +68,8 @@
 								ArrayList<String> RDList = deviceInfoDAO.getRoomDeviceList(roomNo);
 								cnt = RDList.size();
 						%>
-						<a class="collapse-item" href="/hanium/room_page.jsp?roomNo=<%=roomNo%>"><%=roomNo%>호(<%=cnt%>/<%=maxBed%>)</a>
+						<a class="collapse-item"
+							href="/hanium/room_page.jsp?roomNo=<%=roomNo%>"><%=roomNo%>호(<%=cnt%>/<%=maxBed%>)</a>
 						<%
 							}
 						%>
@@ -90,9 +92,10 @@
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">SETTINGS:</h6>
-						<a class="collapse-item" href="/hanium/patients_admin.jsp">환자 관리</a> <a
-							class="collapse-item" href="/hanium/rooms_admin.jsp">병실 관리</a> <a
-							class="collapse-item" href="/hanium/devices_admin.jsp">기기 관리</a>
+						<a class="collapse-item" href="/hanium/patients_admin.jsp">환자
+							관리</a> <a class="collapse-item" href="/hanium/rooms_admin.jsp">병실
+							관리</a> <a class="collapse-item" href="/hanium/devices_admin.jsp">기기
+							관리</a>
 					</div>
 				</div></li>
 
@@ -111,17 +114,25 @@
 
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script type="text/javascript">
-		$(document).ready(
-				function() {
-					var url = window.location.pathname;
-					$('li.nav-item a[href="' + url + '"]').parent().addClass(
-							'active');
-					$('div.collapse-inner a[href="' + url + '"]').closest('li')
-							.addClass('active');
-					$('div.collapse-inner a[href="' + url + '"]').addClass(
-							'active');
+		$(document).ready(function() {
+			var url = window.location.pathname;
+			var para = window.location.search;
+			var sel = $('li.nav-item a[href="' + url + '"]');
 
-				});
+			if (sel.length > 0) {
+				sel.parent().addClass('active');
+			} else if ($('a.collapse-item[href="' + url + '"]').length > 0) {
+				sel = $('a.collapse-item[href="' + url + '"]');
+				sel.closest('li').addClass('active');
+				sel.addClass('active');
+				sel.closest('div.collapse').addClass('show');
+			} else {
+				sel = $('a.collapse-item[href="' + url + para + '"]');
+				sel.closest('li').addClass('active');
+				sel.addClass('active');
+				sel.closest('div.collapse').addClass('show');
+			}
+		});
 	</script>
 </body>
 
