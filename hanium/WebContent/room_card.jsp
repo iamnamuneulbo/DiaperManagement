@@ -3,8 +3,8 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="device.RoomDAO"%>
 <%@ page import="device.Room"%>
-<%@ page import="device.DeviceInfoDAO"%>
-<%@ page import="device.DeviceInfo"%>
+<%@ page import="device.PatientInfoDAO"%>
+<%@ page import="device.PatientInfo"%>
 <%@ page import="device.DeviceValDAO"%>
 <%@ page import="device.DeviceVal"%>
 <%@ page import="java.util.ArrayList"%>
@@ -20,15 +20,15 @@
 				request.setCharacterEncoding("UTF-8");
 
 				DeviceValDAO deviceValDAO2 = new DeviceValDAO();
-				DeviceInfoDAO deviceInfoDAO2 = new DeviceInfoDAO();
-				ArrayList<DeviceInfo> RDList = deviceInfoDAO2.getRoomDeviceBed(pageRoomNo); // 병실의 기기 목록 가져오기
+				PatientInfoDAO patientInfoDAO2 = new PatientInfoDAO();
+				ArrayList<PatientInfo> RDList = patientInfoDAO2.getRoomDeviceBed(pageRoomNo); // 병실의 기기 목록 가져오기
 				SimpleDateFormat lformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				SimpleDateFormat sformat = new SimpleDateFormat("MM/dd HH:mm");
 
-				String deviceID, dataTime, dataTimeF, tag, img, userName, ststeText, bed;
+				String deviceID, dataTime, dataTimeF, tag, img, userName, ststeText;
 				int temperature, humidity, gas, state = -1, cardCnt = 0, bedNo;
 
-				for (DeviceInfo rs : RDList) {
+				for (PatientInfo rs : RDList) {
 					DeviceVal deviceVal = deviceValDAO2.getValue(rs.getDeviceID()); // 기기 아이디-수집한 값 가져오기 
 
 					deviceID = deviceVal.getDeviceID();
@@ -37,10 +37,9 @@
 					humidity = deviceVal.getHumidity();
 					gas = deviceVal.getGas();
 					state = deviceVal.getState();
-					bed = rs.getBedNo();
-					bedNo = Integer.valueOf(bed);
+					bedNo = rs.getBedNo();
 
-					userName = deviceInfoDAO2.getUserName(deviceID);
+					userName = patientInfoDAO2.getUserName(deviceID);
 					dataTimeF = sformat.format(lformat.parse(dataTime));
 
 					if (state == 0) {
@@ -74,7 +73,7 @@
 				<div class="card bg-<%=tag%> shadow mb-2">
 					<div class="card-header bg-<%=tag%> py-2">
 						<h6 class="m-0 font-weight-bold text-gray-100">
-							<i class="fas fa-procedures"></i> [<%=bed%>] | <i
+							<i class="fas fa-procedures"></i> [<%=bedNo%>] | <i
 								class="fas fa-user"></i>
 							<%=userName%>
 							| <i class="fas fa-microchip"></i> [<%=deviceID%>]

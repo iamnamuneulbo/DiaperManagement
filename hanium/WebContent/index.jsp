@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="device.RoomDAO"%>
 <%@ page import="device.Room"%>
-<%@ page import="device.DeviceInfoDAO"%>
+<%@ page import="device.PatientInfoDAO"%>
 <%@ page import="device.DeviceValDAO"%>
 <%@ page import="device.DeviceVal"%>
 <%@ page import="java.util.ArrayList"%>
@@ -77,7 +77,7 @@
 					<section class="row">
 						<%
 							DeviceValDAO deviceValDAO2 = new DeviceValDAO();
-							DeviceInfoDAO deviceInfoDAO2 = new DeviceInfoDAO();
+							PatientInfoDAO patientInfoDAO2 = new PatientInfoDAO();
 							RoomDAO roomDAO2 = new RoomDAO();
 							ArrayList<Room> roomList2 = roomDAO2.getRoomList();
 
@@ -90,7 +90,7 @@
 								roomNo = rs.getRoomNo();
 								maxBed = rs.getMaxBed();
 
-								ArrayList<String> RDList = deviceInfoDAO2.getRoomDeviceList(roomNo);
+								ArrayList<String> RDList = patientInfoDAO2.getRoomDeviceList(roomNo);
 								cnt = RDList.size();
 								for (String device : RDList) {
 									state = deviceValDAO2.getState(device);
