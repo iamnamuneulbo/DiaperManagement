@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="device.RoomDAO"%>
 <%@ page import="device.Room"%>
-<%@ page import="device.DeviceInfoDAO"%>
+<%@ page import="device.PatientInfoDAO"%>
 <%@ page import="device.DeviceValDAO"%>
 <%@ page import="device.DeviceVal"%>
 <%@ page import="java.util.ArrayList"%>
@@ -39,8 +39,8 @@
 									request.setCharacterEncoding("UTF-8");
 
 									DeviceValDAO deviceValDAO4 = new DeviceValDAO();
-									DeviceInfoDAO deviceInfoDAO4 = new DeviceInfoDAO();
-									ArrayList<String> RDList = deviceInfoDAO4.getRoomDeviceList(pageRoomNo);
+									PatientInfoDAO patientInfoDAO4 = new PatientInfoDAO();
+									ArrayList<String> RDList = patientInfoDAO4.getRoomDeviceList(pageRoomNo);
 
 									String deviceID, dataTime, tag, img, userName, ststeText;
 									int temperature, humidity, gas;
@@ -53,7 +53,7 @@
 										temperature = deviceVal.getTemperature();
 										humidity = deviceVal.getHumidity();
 										gas = deviceVal.getGas();
-										userName = deviceInfoDAO4.getUserName(deviceID);
+										userName = patientInfoDAO4.getUserName(deviceID);
 								%>
 								<tr>
 									<td><%=userName%></td>
