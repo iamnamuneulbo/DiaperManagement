@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="device.RoomDAO"%>
 <%@ page import="device.Room"%>
-<%@ page import="device.DeviceInfoDAO"%>
+<%@ page import="device.PatientInfoDAO"%>
 <%@ page import="device.DeviceValDAO"%>
 <%@ page import="device.DeviceVal"%>
 <%@ page import="java.util.ArrayList"%>
@@ -54,7 +54,7 @@
 							request.setCharacterEncoding("UTF-8");
 
 							DeviceValDAO deviceValDAO = new DeviceValDAO();
-							DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();
+							PatientInfoDAO patientInfoDAO = new PatientInfoDAO();
 							RoomDAO roomDAO = new RoomDAO();
 							ArrayList<Room> roomList = roomDAO.getRoomList();
 
@@ -65,7 +65,7 @@
 								roomNo = rs.getRoomNo();
 								maxBed = rs.getMaxBed();
 
-								ArrayList<String> RDList = deviceInfoDAO.getRoomDeviceList(roomNo);
+								ArrayList<String> RDList = patientInfoDAO.getRoomDeviceList(roomNo);
 								cnt = RDList.size();
 						%>
 						<a class="collapse-item"
@@ -115,11 +115,15 @@
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			var url = window.location.pathname;
-			var para = window.location.search;
+			var location = window.location
+			var url = location.pathname;
+			var para = location.search;
 			var sel;
 
-			if ($('a.collapse-item[href="' + url + '"]').length > 0) {
+			if (url.match(/index/)) {
+				$('li.nav-item a[href="' + url + '"]').parent().addClass('active');
+			}
+			else if ($('a.collapse-item[href="' + url + '"]').length > 0) {
 				sel = $('a.collapse-item[href="' + url + '"]');
 				sel.closest('li').addClass('active');
 				sel.addClass('active');
@@ -129,8 +133,6 @@
 				sel.closest('li').addClass('active');
 				sel.addClass('active');
 				sel.closest('div.collapse').addClass('show');
-			} else {
-				$('li.nav-item a[href="' + url + '"]').parent().addClass('active');
 			}
 		});
 	</script>
