@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="device.RoomDAO"%>
-<%@ page import="device.Room"%>
-<%@ page import="device.DeviceInfoDAO"%>
-<%@ page import="device.DeviceValDAO"%>
-<%@ page import="device.DeviceVal"%>
+<%@ page import="device.PatientInfoDAO"%>
+<%@ page import="device.PatientInfo"%>
 <%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html lang="ko">
@@ -65,59 +62,69 @@
 
 				</nav>
 				<!-- End of Topbar -->
-				
+
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">Tables</h1>
-					<p class="mb-4">
-						DataTables is a third party plugin that is used to generate the
-						demo table below. For more information about DataTables, please
-						visit the <a target="_blank" href="https://datatables.net">official
-							DataTables documentation</a>.
-					</p>
+					<h1 class="h3 mb-2 text-gray-800">환자 관리</h1>
+					<p class="mb-4"></p>
+
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">DataTables
-								Example</h6>
+							<h6 class="m-0 font-weight-bold text-primary">환자 리스트</h6>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
+								<table class="table table-bordered stripe hover" id="dataTable"
+									width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<th>Name</th>
-											<th>Position</th>
-											<th>Office</th>
-											<th>Age</th>
-											<th>Start date</th>
-											<th>Salary</th>
+											<th>환자번호</th>
+											<th>이름</th>
+											<th>병실</th>
+											<th>침대번호</th>
+											<th>기기번호</th>
+											<th>수정</th>
+											<th>삭제</th>
 										</tr>
 									</thead>
 									<tfoot>
 										<tr>
-											<th>Name</th>
-											<th>Position</th>
-											<th>Office</th>
-											<th>Age</th>
-											<th>Start date</th>
-											<th>Salary</th>
+											<th>환자번호</th>
+											<th>이름</th>
+											<th>병실</th>
+											<th>침대번호</th>
+											<th>기기번호</th>
+											<th>수정</th>
+											<th>삭제</th>
 										</tr>
 									</tfoot>
 									<tbody>
-										<tr>
-											<td>Tiger Nixon</td>
-											<td>System Architect</td>
-											<td>Edinburgh</td>
-											<td>61</td>
-											<td>2011/04/25</td>
-											<td>$320,800</td>
-										</tr>
+										<%
+											request.setCharacterEncoding("UTF-8");
 
+											PatientInfoDAO patientInfoDAO = new PatientInfoDAO();
+											ArrayList<PatientInfo> patientList = patientInfoDAO.getList();
+
+											for (PatientInfo rs : patientList) {
+										%>
+										<tr>
+											<td><%=rs.getUserID()%></td>
+											<td><%=rs.getUserName()%></td>
+											<td><%=rs.getRoomNo()%></td>
+											<td><%=rs.getBedNo()%></td>
+											<td><%=rs.getDeviceID()%></td>
+											<td><a href="#" class="btn btn-success btn-circle"><i
+													class="fas fa-edit"></i> </a></td>
+											<td><a href="#" class="btn btn-danger btn-circle"><i
+													class="fas fa-trash"></i> </a></td>
+										</tr>
+										<%
+											}
+										%>
 									</tbody>
 								</table>
 							</div>
@@ -131,13 +138,7 @@
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
-			<footer class="sticky-footer bg-white">
-				<div class="container my-auto">
-					<div class="copyright text-center my-auto">
-						<span>Copyright &copy; Your Website 2019</span>
-					</div>
-				</div>
-			</footer>
+			<jsp:include page="footer.jsp"></jsp:include>
 			<!-- End of Footer -->
 
 		</div>
@@ -167,7 +168,12 @@
 
 	<!-- Page level custom scripts -->
 	<script src="js/demo/datatables-demo.js"></script>
-	
+
+	<script>
+		$(document).ready(function() {
+			$('table').DataTable();
+		});
+	</script>
 </body>
 
 </html>
