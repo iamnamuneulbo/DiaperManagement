@@ -105,15 +105,15 @@ public class PatientInfoDAO {
 		return userName;
 	}
 
-	public void update(String roomNo, int bedNo, String deviceID, int patientID) {
-		String SQL = "UPDATE patient SET roomNo=? bedNo=? deviceID=? WHERE patientID=?";
+	public void update(String roomNo, int bedNo, String deviceID, int userID) {
+		String SQL = "UPDATE patient SET roomNo=? bedNo=? deviceID=? WHERE userID=?";
 		
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, roomNo);
 			pstmt.setInt(2, bedNo);
 			pstmt.setString(3, deviceID);
-			pstmt.setInt(4, patientID);
+			pstmt.setInt(4, userID);
 			
 			pstmt.executeUpdate();
 
