@@ -62,7 +62,7 @@ public class DeviceInfoDAO {
 	}
 	
 	public void update(String checkDate, String deviceID) {
-		String SQL = "UPDATE device set checkDate=? WHERE deviceID=?";
+		String SQL = "UPDATE device SET checkDate=? WHERE deviceID=?";
 		
 		try {
 			pstmt = conn.prepareStatement(SQL);

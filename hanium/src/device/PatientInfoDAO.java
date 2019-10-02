@@ -106,7 +106,7 @@ public class PatientInfoDAO {
 	}
 
 	public void update(String roomNo, int bedNo, String deviceID, int userID) {
-		String SQL = "UPDATE patient SET roomNo=? bedNo=? deviceID=? WHERE userID=?";
+		String SQL = "UPDATE patient SET roomNo=?, bedNo=?, deviceID=? WHERE userID=?";
 		
 		try {
 			pstmt = conn.prepareStatement(SQL);
