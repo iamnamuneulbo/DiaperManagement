@@ -64,12 +64,62 @@
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
-				<div class="container-fluid">
 
+				<!-- Update Modal-->
+				<div class="modal fade" id="modalUpdateForm" tabindex="-1"
+					role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="updateModalLabel">환자 정보 수정</h5>
+								<button class="close" type="button" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form method="post" action="update.jsp" class="user">
+								<!-- 
+											<i class="fas fa-user fa-2x"></i>
+											<i class="fas fa-microchip fa-2x"></i>
+											<i class="fas fa-door-closed fa-2x"></i>
+											<i class="fas fa-procedures fa-2x"></i>
+								 -->
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="text" class="form-control form-control-user"
+												id="updateName" placeholder="환자이름" readonly>
+										</div>
+										<div class="col-sm-6">
+											<input type="text" class="form-control form-control-user"
+												id="updateDeviceID" placeholder="기기번호">
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="text" class="form-control form-control-user"
+												id="updateRoom" placeholder="병실">
+										</div>
+										<div class="col-sm-6">
+											<input type="text" class="form-control form-control-user"
+												id="updateBedNo" placeholder="침대번호">
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-secondary" type="button"
+									data-dismiss="modal">취소</button>
+								<a class="btn btn-success" href="update.jsp">수정</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="container-fluid">
 					<!-- Page Heading -->
 					<h1 class="h3 mb-2 text-gray-800">환자 관리</h1>
 					<p class="mb-4"></p>
-
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
@@ -109,15 +159,20 @@
 											PatientInfoDAO patientInfoDAO = new PatientInfoDAO();
 											ArrayList<PatientInfo> patientList = patientInfoDAO.getList();
 
+											int userID, bedNo;
+											String userName, roomNo, deviceID;
+
 											for (PatientInfo rs : patientList) {
+												userID = rs.getUserID();
 										%>
 										<tr>
-											<td><%=rs.getUserID()%></td>
+											<td><%=userID%></td>
 											<td><%=rs.getUserName()%></td>
 											<td><%=rs.getRoomNo()%></td>
 											<td><%=rs.getBedNo()%></td>
 											<td><%=rs.getDeviceID()%></td>
-											<td><a href="#" class="btn btn-success btn-circle"><i
+											<td><a href="#" class="btn btn-success btn-circle"
+												data-toggle="modal" data-target="#modalUpdateForm"><i
 													class="fas fa-edit"></i> </a></td>
 											<td><a href="#" class="btn btn-danger btn-circle"><i
 													class="fas fa-trash"></i> </a></td>
