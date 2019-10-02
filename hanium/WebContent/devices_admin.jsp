@@ -87,6 +87,7 @@ i.modal-form-icon {
 									<thead>
 										<tr>
 											<th>기기번호</th>
+											<th>점검일</th>
 											<th>수정</th>
 											<th>삭제</th>
 										</tr>
@@ -94,6 +95,7 @@ i.modal-form-icon {
 									<tfoot>
 										<tr>
 											<th>기기번호</th>
+											<th>점검일</th>
 											<th>수정</th>
 											<th>삭제</th>
 										</tr>
@@ -105,13 +107,13 @@ i.modal-form-icon {
 											DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();
 											ArrayList<DeviceInfo> deviceList = deviceInfoDAO.getList();
 
-											String deviceID;
+											String deviceID, checkDate;
 
 											for (DeviceInfo rs : deviceList) {
-												deviceID = rs.getDeviceID();
 										%>
 										<tr>
 											<td><%=rs.getDeviceID()%></td>
+											<td><%=rs.getCheckDate()%></td>
 											<td><a href="#" class="btn btn-success btn-circle"
 												data-toggle="modal" data-target="#modalUpdateForm"><i
 													class="fas fa-edit"></i> </a></td>
@@ -164,9 +166,11 @@ i.modal-form-icon {
 					</button>
 				</div>
 				<div class="modal-body">
-					<form method="post" action="update.jsp" class="user">
+					<form method="post" action="update.jsp" class="user"
+						id="updateForm">
 
-						<input type="hidden" id="updateIdx" name="idx" value="2">
+						<input type="hidden" id="updateTarget" name="target"
+							value="device">
 
 						<div class="row mb-3">
 							<div class="col-3 text-center">
@@ -174,7 +178,16 @@ i.modal-form-icon {
 							</div>
 							<div class="col-9">
 								<input type="text" class="form-control form-control-user"
-									id="updateDeviceID" name="deviceID" placeholder="기기번호">
+									id="updateDeviceID" name="deviceID" placeholder="기기번호" readonly>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-3 text-center">
+								<i class="fas fa-calendar-day fa-2x modal-form-icon"></i>
+							</div>
+							<div class="col-9">
+								<input type="text" class="form-control form-control-user"
+									id="updateCheckDate" name="checkDate" placeholder="점검일">
 							</div>
 						</div>
 
@@ -183,7 +196,8 @@ i.modal-form-icon {
 				<div class="modal-footer">
 					<button class="btn btn-secondary" type="button"
 						data-dismiss="modal">취소</button>
-					<button class="btn btn-success" id="updateBtn" type="submit">수정</button>
+					<button class="btn btn-success" id="updateBtn" type="submit"
+						form="updateForm">수정</button>
 				</div>
 			</div>
 		</div>
@@ -197,16 +211,18 @@ i.modal-form-icon {
 			role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="deleteModalLabel">정말 삭제하시겠습니까?</h5>
+					<h5 class="modal-title" id="deleteModalLabel">기기 정보 삭제</h5>
 					<button class="close" type="button" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<form method="post" action="delete.jsp" class="user">
+					<form method="post" action="delete.jsp" class="user"
+						id="deleteForm">
 
-						<input type="hidden" id="updateIdx" name="idx" value="2">
+						<input type="hidden" id="deleteTarget" name="target"
+							value="device">
 
 						<div class="row mb-3">
 							<div class="col-3 text-center">
@@ -214,7 +230,7 @@ i.modal-form-icon {
 							</div>
 							<div class="col-9">
 								<input type="text" class="form-control form-control-user"
-									id="updateDeviceID" name="deviceID" placeholder="기기번호" readonly>
+									id="deleteDeviceID" name="deviceID" placeholder="기기번호" readonly>
 							</div>
 						</div>
 					</form>
@@ -222,7 +238,8 @@ i.modal-form-icon {
 				<div class="modal-footer">
 					<button class="btn btn-secondary" type="button"
 						data-dismiss="modal">취소</button>
-					<button class="btn btn-danger" id="deleteBtn" type="submit">삭제</button>
+					<button class="btn btn-danger" id="deleteBtn" type="submit"
+						form="deleteForm">삭제</button>
 				</div>
 			</div>
 		</div>
@@ -254,9 +271,20 @@ i.modal-form-icon {
 				"click",
 				function() {
 					var deviceID = $(this).closest('tr')
-							.find('td:nth-child(1)').text();
+					.find('td:nth-child(1)').text();
+					var checkDate = $(this).closest('tr')
+					.find('td:nth-child(2)').text();
 
 					$(".modal-body #updateDeviceID").val(deviceID);
+					$(".modal-body #updateCheckDate").val(checkDate);
+				});
+		$('[data-target="#modalDelete"]').on(
+				"click",
+				function() {
+					var deviceID = $(this).closest('tr')
+							.find('td:nth-child(1)').text();
+
+					$(".modal-body #deleteDeviceID").val(deviceID);
 				});
 	</script>
 </body>

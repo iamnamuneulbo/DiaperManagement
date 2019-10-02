@@ -135,7 +135,9 @@ public class DeviceValDAO {
 			if (pstmt != null)
 				pstmt.close();
 		} catch (SQLException e) {
-			//logger.debug("\n[ DBConnection Close Exception ] " + e.toString());
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

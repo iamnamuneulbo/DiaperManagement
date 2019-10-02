@@ -34,6 +34,7 @@ public class DeviceInfoDAO {
 			while (rs.next()) {
 				DeviceInfo deviceInfo = new DeviceInfo();
 				deviceInfo.setDeviceID(rs.getString(1));
+				deviceInfo.setCheckDate(rs.getString(2));
 				list.add(deviceInfo);
 			}
 		} catch (Exception e) {
@@ -44,6 +45,39 @@ public class DeviceInfoDAO {
 		return list;
 	}
 
+	public void delete(String deviceID) {
+		String SQL = "DELETE FROM device WHERE deviceID=?";
+		
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, deviceID);
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+	
+	public void update(String checkDate, String deviceID) {
+		String SQL = "UPDATE device set checkDate=? WHERE deviceID=?";
+		
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, checkDate);
+			pstmt.setString(2, deviceID);
+			
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+
 	private void close() {
 		try {
 			if (rs != null)
@@ -51,7 +85,9 @@ public class DeviceInfoDAO {
 			if (pstmt != null)
 				pstmt.close();
 		} catch (SQLException e) {
-			// logger.debug("\n[ DBConnection Close Exception ] " + e.toString());
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

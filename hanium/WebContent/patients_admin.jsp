@@ -111,14 +111,10 @@ i.modal-form-icon {
 											PatientInfoDAO patientInfoDAO = new PatientInfoDAO();
 											ArrayList<PatientInfo> patientList = patientInfoDAO.getList();
 
-											int userID, bedNo;
-											String userName, roomNo, deviceID;
-
 											for (PatientInfo rs : patientList) {
-												userID = rs.getUserID();
 										%>
 										<tr>
-											<td><%=userID%></td>
+											<td><%=rs.getUserID()%></td>
 											<td><%=rs.getUserName()%></td>
 											<td><%=rs.getDeviceID()%></td>
 											<td><%=rs.getRoomNo()%></td>
@@ -172,10 +168,12 @@ i.modal-form-icon {
 					</button>
 				</div>
 				<div class="modal-body">
-					<form method="post" action="update.jsp" class="user">
+					<form method="post" action="update.jsp" class="user"
+						id="updateForm">
 
-						<input type="hidden" id="updateIdx" name="idx" value="1">
-						<input type="hidden" id="updateUserID" name="userID" value="">
+						<input type="hidden" id="updateTarget" name="target"
+							value="patient"> <input type="hidden" id="updateUserID"
+							name="userID" value="">
 
 						<div class="row mb-3">
 							<div class="col-3 text-center">
@@ -222,7 +220,8 @@ i.modal-form-icon {
 				<div class="modal-footer">
 					<button class="btn btn-secondary" type="button"
 						data-dismiss="modal">취소</button>
-					<button class="btn btn-success" id="updateBtn" type="submit">수정</button>
+					<button class="btn btn-success" id="updateBtn" type="submit"
+						form="updateForm">수정</button>
 				</div>
 			</div>
 		</div>
