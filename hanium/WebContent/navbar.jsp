@@ -135,6 +135,10 @@
 				sel.closest('div.collapse').addClass('show');
 			}
 		});
+
+		$(document).on("click", function() {
+			$('div.collapse').removeClass('show');
+		});
 	</script>
 </body>
 

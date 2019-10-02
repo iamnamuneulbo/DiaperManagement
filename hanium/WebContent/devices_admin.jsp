@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="device.PatientInfoDAO"%>
-<%@ page import="device.PatientInfo"%>
+<%@ page import="device.DeviceInfoDAO"%>
+<%@ page import="device.DeviceInfo"%>
 <%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html lang="ko">
@@ -14,7 +14,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>환자 관리 - 설정</title>
+<title>기기 관리 - 설정</title>
 
 <!-- Custom fonts for this template -->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -72,13 +72,13 @@ i.modal-form-icon {
 
 				<div class="container-fluid">
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">환자 관리</h1>
+					<h1 class="h3 mb-2 text-gray-800">기기 관리</h1>
 					<p class="mb-4"></p>
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">환자 리스트</h6>
+							<h6 class="m-0 font-weight-bold text-primary">기기 리스트</h6>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
@@ -86,46 +86,38 @@ i.modal-form-icon {
 									id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<th>환자번호</th>
-											<th>이름</th>
 											<th>기기번호</th>
-											<th>병실</th>
-											<th>침대번호</th>
 											<th>수정</th>
+											<th>삭제</th>
 										</tr>
 									</thead>
 									<tfoot>
 										<tr>
-											<th>환자번호</th>
-											<th>이름</th>
 											<th>기기번호</th>
-											<th>병실</th>
-											<th>침대번호</th>
 											<th>수정</th>
+											<th>삭제</th>
 										</tr>
 									</tfoot>
 									<tbody>
 										<%
 											request.setCharacterEncoding("UTF-8");
 
-											PatientInfoDAO patientInfoDAO = new PatientInfoDAO();
-											ArrayList<PatientInfo> patientList = patientInfoDAO.getList();
+											DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();
+											ArrayList<DeviceInfo> deviceList = deviceInfoDAO.getList();
 
-											int userID, bedNo;
-											String userName, roomNo, deviceID;
+											String deviceID;
 
-											for (PatientInfo rs : patientList) {
-												userID = rs.getUserID();
+											for (DeviceInfo rs : deviceList) {
+												deviceID = rs.getDeviceID();
 										%>
 										<tr>
-											<td><%=userID%></td>
-											<td><%=rs.getUserName()%></td>
 											<td><%=rs.getDeviceID()%></td>
-											<td><%=rs.getRoomNo()%></td>
-											<td><%=rs.getBedNo()%></td>
 											<td><a href="#" class="btn btn-success btn-circle"
 												data-toggle="modal" data-target="#modalUpdateForm"><i
 													class="fas fa-edit"></i> </a></td>
+											<td><a href="#" class="btn btn-danger btn-circle"
+												data-toggle="modal" data-target="#modalDelete"><i
+													class="fas fa-trash"></i> </a></td>
 										</tr>
 										<%
 											}
@@ -165,7 +157,7 @@ i.modal-form-icon {
 			role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="updateModalLabel">환자 정보 수정</h5>
+					<h5 class="modal-title" id="updateModalLabel">기기 정보 수정</h5>
 					<button class="close" type="button" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">×</span>
@@ -174,18 +166,7 @@ i.modal-form-icon {
 				<div class="modal-body">
 					<form method="post" action="update.jsp" class="user">
 
-						<input type="hidden" id="updateIdx" name="idx" value="1">
-						<input type="hidden" id="updateUserID" name="userID" value="">
-
-						<div class="row mb-3">
-							<div class="col-3 text-center">
-								<i class="fas fa-user fa-2x modal-form-icon"></i>
-							</div>
-							<div class="col-9">
-								<input type="text" class="form-control form-control-user"
-									id="updateName" placeholder="환자이름" readonly>
-							</div>
-						</div>
+						<input type="hidden" id="updateIdx" name="idx" value="2">
 
 						<div class="row mb-3">
 							<div class="col-3 text-center">
@@ -194,26 +175,6 @@ i.modal-form-icon {
 							<div class="col-9">
 								<input type="text" class="form-control form-control-user"
 									id="updateDeviceID" name="deviceID" placeholder="기기번호">
-							</div>
-						</div>
-
-						<div class="row mb-3">
-							<div class="col-3 text-center">
-								<i class="fas fa-door-closed fa-2x modal-form-icon"></i>
-							</div>
-							<div class="col-9">
-								<input type="text" class="form-control form-control-user"
-									id="updateRoomNo" name="roomNo" placeholder="병실">
-							</div>
-						</div>
-
-						<div class="row mb-3">
-							<div class="col-3 text-center">
-								<i class="fas fa-procedures fa-2x modal-form-icon"></i>
-							</div>
-							<div class="col-9">
-								<input type="text" class="form-control form-control-user"
-									id="updateBedNo" name="bedNo" placeholder="침대번호">
 							</div>
 						</div>
 
@@ -228,6 +189,45 @@ i.modal-form-icon {
 		</div>
 	</div>
 	<!-- End of Update Modal-->
+
+	<!-- Delete Modal-->
+	<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog"
+		aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm modal-dialog-centered"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteModalLabel">정말 삭제하시겠습니까?</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form method="post" action="delete.jsp" class="user">
+
+						<input type="hidden" id="updateIdx" name="idx" value="2">
+
+						<div class="row mb-3">
+							<div class="col-3 text-center">
+								<i class="fas fa-microchip fa-2x modal-form-icon"></i>
+							</div>
+							<div class="col-9">
+								<input type="text" class="form-control form-control-user"
+									id="updateDeviceID" name="deviceID" placeholder="기기번호" readonly>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">취소</button>
+					<button class="btn btn-danger" id="deleteBtn" type="submit">삭제</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End of Delete Modal-->
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>
@@ -253,21 +253,9 @@ i.modal-form-icon {
 		$('[data-target="#modalUpdateForm"]').on(
 				"click",
 				function() {
-					var userID = $(this).closest('tr').find('td:nth-child(1)')
-							.text();
-					var userName = $(this).closest('tr')
-							.find('td:nth-child(2)').text();
 					var deviceID = $(this).closest('tr')
-							.find('td:nth-child(3)').text();
-					var roomNo = $(this).closest('tr').find('td:nth-child(4)')
-							.text();
-					var bedNo = $(this).closest('tr').find('td:nth-child(5)')
-							.text();
+							.find('td:nth-child(1)').text();
 
-					$(".modal-body #updateUserID").val(userID);
-					$(".modal-body #updateName").val(userName);
-					$(".modal-body #updateRoomNo").val(roomNo);
-					$(".modal-body #updateBedNo").val(bedNo);
 					$(".modal-body #updateDeviceID").val(deviceID);
 				});
 	</script>
