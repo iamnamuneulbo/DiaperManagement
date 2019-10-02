@@ -25,7 +25,7 @@ public class DeviceInfoDAO {
 	}
 
 	public ArrayList<DeviceInfo> getList() {
-		String SQL = "SELECT * FROM device ORDER BY bedNo";
+		String SQL = "SELECT * FROM device ORDER BY deviceID";
 		ArrayList<DeviceInfo> list = new ArrayList<DeviceInfo>();
 
 		try {
