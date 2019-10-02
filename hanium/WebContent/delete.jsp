@@ -4,11 +4,12 @@
 <%@ page import="device.DeviceInfo"%>
 
 <%
+	request.setCharacterEncoding("UTF-8");
 	String target = request.getParameter("target");
 	String deviceID = request.getParameter("deviceID");
 
 	if (target.equals("device")) {
-		System.out.println(deviceID+"삭제");
+		System.out.println(deviceID + "삭제");
 		DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();
 		deviceInfoDAO.delete(deviceID);
 		response.sendRedirect("devices_admin.jsp");

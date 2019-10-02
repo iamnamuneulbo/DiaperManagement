@@ -17,7 +17,7 @@ public class DeviceValDAO {
 			String dbURL = "jdbc:mysql://3.13.163.79:3306/han_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul";
 			String dbID = "admin";
 			String dbPassword = "ifnt0719";
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -41,18 +41,18 @@ public class DeviceValDAO {
 		return ""; // DB 오류
 	}
 
-	public int insertValues(DeviceVal deviceVal) {
+	public int insert(String deviceID, int temperature, int humidity, int gas, int state) {
 		String SQL = "INSERT INTO deviceVal VALUES(?, ?, ?, ?, ?, ?, NULL)";
 
 		try {
 			pstmt = conn.prepareStatement(SQL);
 
-			pstmt.setString(1, deviceVal.getDeviceID());
+			pstmt.setString(1, deviceID);
 			pstmt.setString(2, getDate());
-			pstmt.setInt(3, deviceVal.getTemperature());
-			pstmt.setInt(4, deviceVal.getHumidity());
-			pstmt.setInt(5, deviceVal.getGas());
-			pstmt.setInt(6, deviceVal.getState());
+			pstmt.setInt(3, temperature);
+			pstmt.setInt(4, humidity);
+			pstmt.setInt(5, gas);
+			pstmt.setInt(6, state);
 
 			return pstmt.executeUpdate();
 		} catch (Exception e) {

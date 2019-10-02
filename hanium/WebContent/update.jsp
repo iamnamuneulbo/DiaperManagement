@@ -4,6 +4,7 @@
 <%@ page import="device.DeviceInfoDAO"%>
 
 <%
+	request.setCharacterEncoding("UTF-8");
 	String target = request.getParameter("target");
 
 	if (target.equals("patient")) {
@@ -14,9 +15,8 @@
 		PatientInfoDAO patientInfoDAO = new PatientInfoDAO();
 		patientInfoDAO.update(roomNo, Integer.valueOf(bedNo), deviceID, Integer.valueOf(userID));
 		response.sendRedirect("patients_admin.jsp");
-		
-	}
-	else if (target.equals("device")) {
+
+	} else if (target.equals("device")) {
 		String checkDate = request.getParameter("checkDate");
 		String deviceID = request.getParameter("deviceID");
 		DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();

@@ -70,7 +70,7 @@ i.modal-form-icon {
 
 				<!-- Begin Page Content -->
 
-				<div class="container-fluid">
+				<section class="container-fluid">
 					<!-- Page Heading -->
 					<h1 class="h3 mb-2 text-gray-800">기기 관리</h1>
 					<p class="mb-4"></p>
@@ -78,7 +78,15 @@ i.modal-form-icon {
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">기기 리스트</h6>
+							<div class="row">
+								<div class="col">
+									<h6 class="m-0 font-weight-bold text-primary">기기 리스트</h6>
+								</div>
+								<div class="col text-right">
+									<a href="#" class="btn btn-primary btn-circle" data-toggle="modal" data-target="#modalInsertForm"> <i
+										class="fas fa-plus"></i></a>
+								</div>
+							</div>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
@@ -130,7 +138,7 @@ i.modal-form-icon {
 						</div>
 					</div>
 
-				</div>
+				</section>
 				<!-- /.container-fluid -->
 
 			</div>
@@ -151,7 +159,58 @@ i.modal-form-icon {
 		class="fas fa-angle-up"></i>
 	</a>
 
+	<!-- Insert Modal-->
+	<div class="modal fade" id="modalInsertForm" tabindex="-1"
+		role="dialog" aria-labelledby="insertModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm modal-dialog-centered"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="insertModalLabel">기기 정보 추가</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form method="post" action="insert.jsp" class="user"
+						id="insertForm">
 
+						<input type="hidden" id="insertTarget" name="target"
+							value="device">
+
+						<div class="row mb-3">
+							<div class="col-3 text-center">
+								<i class="fas fa-microchip fa-2x modal-form-icon"></i>
+							</div>
+							<div class="col-9">
+								<input type="text" class="form-control form-control-user"
+									id="insertDeviceID" name="deviceID" placeholder="기기번호">
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-3 text-center">
+								<i class="fas fa-calendar-day fa-2x modal-form-icon"></i>
+							</div>
+							<div class="col-9">
+								<input type="text" class="form-control form-control-user"
+									id="insertCheckDate" name="checkDate" placeholder="점검일(추가 일자 자동 입력)" readonly>
+							</div>
+						</div>
+
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">취소</button>
+					<button class="btn btn-success" id="insertBtn" type="submit"
+						form="insertForm">추가</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End of Insert Modal-->
+	
 	<!-- Update Modal-->
 	<div class="modal fade" id="modalUpdateForm" tabindex="-1"
 		role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
@@ -190,7 +249,6 @@ i.modal-form-icon {
 									id="updateCheckDate" name="checkDate" placeholder="점검일">
 							</div>
 						</div>
-
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -267,17 +325,19 @@ i.modal-form-icon {
 		$(document).ready(function() {
 			$('table').DataTable();
 		});
+
 		$('[data-target="#modalUpdateForm"]').on(
 				"click",
 				function() {
 					var deviceID = $(this).closest('tr')
-					.find('td:nth-child(1)').text();
-					var checkDate = $(this).closest('tr')
-					.find('td:nth-child(2)').text();
+							.find('td:nth-child(1)').text();
+					var checkDate = $(this).closest('tr').find(
+							'td:nth-child(2)').text();
 
 					$(".modal-body #updateDeviceID").val(deviceID);
 					$(".modal-body #updateCheckDate").val(checkDate);
 				});
+
 		$('[data-target="#modalDelete"]').on(
 				"click",
 				function() {
