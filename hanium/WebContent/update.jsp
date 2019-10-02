@@ -10,7 +10,7 @@
 		String roomNo = request.getParameter("roomNo");
 		String bedNo = request.getParameter("bedNo");
 		String deviceID = request.getParameter("deviceID");
-		String patientID = request.getParameter("deviceID");
+		String patientID = request.getParameter("patientID");
 		System.out.println(patientID+"수정");
 		PatientInfoDAO patientInfoDAO = new PatientInfoDAO();
 		patientInfoDAO.update(roomNo, Integer.valueOf(bedNo), deviceID, Integer.valueOf(patientID));
