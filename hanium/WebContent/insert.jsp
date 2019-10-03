@@ -1,38 +1,49 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page import="java.sql.*, java.util.*, java.text.*"%>
 <%@ page import="device.DeviceValDAO"%>
+<%@ page import="device.DeviceInfoDAO"%>
 <%@ page import="java.io.PrintWriter"%>
 
-<jsp:useBean id="deviceVal" class="device.DeviceVal" scope="page" />
-<jsp:setProperty name="deviceVal" property="deviceID" />
-<jsp:setProperty name="deviceVal" property="temperature" />
-<jsp:setProperty name="deviceVal" property="humidity" />
-<jsp:setProperty name="deviceVal" property="gas" />
 <%
 	request.setCharacterEncoding("UTF-8");
+	String target = request.getParameter("target");
 
-	DeviceValDAO deviceValDAO = new DeviceValDAO();
+	if (target.equals("deviceVal")) {
+		String deviceID = request.getParameter("deviceID");
+		String temperature = request.getParameter("temperature");
+		String humidity = request.getParameter("humidity");
+		String gas = request.getParameter("gas");
+		int state;
 
-	String deviceID = deviceVal.getDeviceID();
-	int temperature = deviceVal.getTemperature();
-	int humidity = deviceVal.getHumidity();
-	int gas = deviceVal.getGas();
-	int sum = temperature + humidity + gas;
+		int intTemp = Integer.valueOf(temperature);
+		int intHumi = Integer.valueOf(humidity);
+		int intGas = Integer.valueOf(gas);
 
-	if (sum > 60) {
-		deviceVal.setState(2);
-	} else if (sum > 40) {
-		deviceVal.setState(1);
-	} else {
-		deviceVal.setState(0);
+		int sum = intTemp + intHumi + intGas;
+
+		if (sum > 60) {
+			state = 2;
+		} else if (sum > 40) {
+			state = 1;
+		} else {
+			state = 0;
+		}
+
+		DeviceValDAO deviceValDAO = new DeviceValDAO();
+		int res = deviceValDAO.insert(deviceID, intTemp, intHumi, intGas, state);
+
+		PrintWriter script = response.getWriter();
+
+		if (res == -1) {
+			script.println("입력실패");
+		} else {
+			script.println(res);
+		}
+	} else if (target.equals("device")) {
+		String deviceID = request.getParameter("deviceID");
+		DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();
+		deviceInfoDAO.insert(deviceID);
+
+		response.sendRedirect("devices_admin.jsp");
 	}
-
-	int res = deviceValDAO.insertValues(deviceVal);
-
-	PrintWriter script = response.getWriter();
-
-	if (res == -1)
-		script.println("입력실패");
-	else
-		script.println(res);
 %>

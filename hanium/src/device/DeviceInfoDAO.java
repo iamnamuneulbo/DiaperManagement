@@ -17,7 +17,7 @@ public class DeviceInfoDAO {
 			String dbURL = "jdbc:mysql://3.13.163.79:3306/han_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul";
 			String dbID = "admin";
 			String dbPassword = "ifnt0719";
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
 			e.printStackTrace(); // 오류가 무엇인지 출력
@@ -44,13 +44,31 @@ public class DeviceInfoDAO {
 		}
 		return list;
 	}
-
-	public void delete(String deviceID) {
-		String SQL = "DELETE FROM device WHERE deviceID=?";
+	
+	public String getDate() {
+		String SQL = "SELECT NOW()";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getString(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return ""; // DB 오류
+	}
+	
+	public void insert(String deviceID) {
+		String SQL = "INSERT INTO device VALUES(?, ?)";
 		
 		try {
+			String date = getDate();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, deviceID);
+			pstmt.setString(2, date);
 
 			pstmt.executeUpdate();
 
@@ -69,6 +87,22 @@ public class DeviceInfoDAO {
 			pstmt.setString(1, checkDate);
 			pstmt.setString(2, deviceID);
 			
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+
+	public void delete(String deviceID) {
+		String SQL = "DELETE FROM device WHERE deviceID=?";
+		
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, deviceID);
+
 			pstmt.executeUpdate();
 
 		} catch (Exception e) {
