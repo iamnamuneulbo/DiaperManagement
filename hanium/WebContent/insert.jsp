@@ -2,6 +2,7 @@
 <%@ page import="java.sql.*, java.util.*, java.text.*"%>
 <%@ page import="device.DeviceValDAO"%>
 <%@ page import="device.DeviceInfoDAO"%>
+<%@ page import="device.RoomDAO"%>
 <%@ page import="java.io.PrintWriter"%>
 
 <%
@@ -60,6 +61,14 @@
 		deviceInfoDAO.insert(deviceID);
 
 		response.sendRedirect("devices_admin.jsp");
+	} else if (target.equals("room")) {
+		String roomNo = request.getParameter("roomNo");
+		String maxBed = request.getParameter("maxBed");
+		int intMaxBed = Integer.valueOf(maxBed);
+		RoomDAO roomDAO = new RoomDAO();
+		roomDAO.insert(roomNo, intMaxBed);
+
+		response.sendRedirect("rooms_admin.jsp");
 	}
 %>
 =======

@@ -17,7 +17,7 @@ public class RoomDAO {
 			String dbURL = "jdbc:mysql://3.13.163.79:3306/han_db?&serverTimezone=Asia/Seoul";
 			String dbID = "admin";
 			String dbPassword = "ifnt0719";
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
 			e.printStackTrace(); // 오류가 무엇인지 출력
@@ -43,6 +43,56 @@ public class RoomDAO {
 			close();
 		}
 		return list;
+	}
+	
+	public void insert(String roomNo, int maxBed) {
+		String SQL = "INSERT INTO room VALUES(?, ?)";
+		
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, roomNo);
+			pstmt.setInt(2, maxBed);
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+	
+	public void update(String roomNo, int maxBed) {
+		String SQL = "UPDATE room SET roomNo=? WHERE maxBed=?";
+		
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, roomNo);
+			pstmt.setInt(2, maxBed);
+			
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+
+	public void delete(String roomNo) {
+		String SQL = "DELETE FROM room WHERE roomNo=?";
+		
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, roomNo);
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
 	}
 
 	private void close() {

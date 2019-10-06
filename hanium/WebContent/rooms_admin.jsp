@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="device.DeviceInfoDAO"%>
-<%@ page import="device.DeviceInfo"%>
+<%@ page import="device.RoomDAO"%>
+<%@ page import="device.Room"%>
 <%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html lang="ko">
@@ -14,7 +14,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>기기 관리 - 설정</title>
+<title>병실 관리 - 설정</title>
 
 <!-- Custom fonts for this template -->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -72,7 +72,7 @@ i.modal-form-icon {
 
 				<section class="container-fluid">
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">기기 관리</h1>
+					<h1 class="h3 mb-2 text-gray-800">병실 관리</h1>
 					<p class="mb-4"></p>
 
 					<!-- DataTales Example -->
@@ -80,7 +80,7 @@ i.modal-form-icon {
 						<div class="card-header py-3">
 							<div class="row">
 								<div class="col">
-									<h6 class="m-0 font-weight-bold text-primary">기기 리스트</h6>
+									<h6 class="m-0 font-weight-bold text-primary">병실 리스트</h6>
 								</div>
 								<div class="col text-right">
 									<a href="#" class="btn btn-primary btn-circle" data-toggle="modal" data-target="#modalInsertForm"> <i
@@ -94,16 +94,16 @@ i.modal-form-icon {
 									id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<th>기기번호</th>
-											<th>점검일</th>
+											<th>병실번호</th>
+											<th>최대 병상 수</th>
 											<th>수정</th>
 											<th>삭제</th>
 										</tr>
 									</thead>
 									<tfoot>
 										<tr>
-											<th>기기번호</th>
-											<th>점검일</th>
+											<th>병실번호</th>
+											<th>최대 병상 수</th>
 											<th>수정</th>
 											<th>삭제</th>
 										</tr>
@@ -112,14 +112,14 @@ i.modal-form-icon {
 										<%
 											request.setCharacterEncoding("UTF-8");
 
-											DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();
-											ArrayList<DeviceInfo> deviceList = deviceInfoDAO.getList();
+											RoomDAO roomDAO = new RoomDAO();
+											ArrayList<Room> roomList = roomDAO.getRoomList();
 
-											for (DeviceInfo rs : deviceList) {
+											for (Room rs : roomList) {
 										%>
 										<tr>
-											<td><%=rs.getDeviceID()%></td>
-											<td><%=rs.getCheckDate()%></td>
+											<td><%=rs.getRoomNo()%></td>
+											<td><%=rs.getMaxBed()%></td>
 											<td><a href="#" class="btn btn-success btn-circle"
 												data-toggle="modal" data-target="#modalUpdateForm"><i
 													class="fas fa-edit"></i> </a></td>
@@ -164,7 +164,7 @@ i.modal-form-icon {
 			role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="insertModalLabel">기기 정보 추가</h5>
+					<h5 class="modal-title" id="insertModalLabel">병실 추가</h5>
 					<button class="close" type="button" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">×</span>
@@ -175,24 +175,24 @@ i.modal-form-icon {
 						id="insertForm">
 
 						<input type="hidden" id="insertTarget" name="target"
-							value="device">
+							value="room">
 
 						<div class="row mb-3">
 							<div class="col-3 text-center">
-								<i class="fas fa-microchip fa-2x modal-form-icon"></i>
+								<i class="fas fa-door-closed fa-2x modal-form-icon"></i>
 							</div>
 							<div class="col-9">
 								<input type="text" class="form-control form-control-user"
-									id="insertDeviceID" name="deviceID" placeholder="기기번호">
+									id="insertRoomNo" name="roomNo" placeholder="병실번호">
 							</div>
 						</div>
 						<div class="row mb-3">
 							<div class="col-3 text-center">
-								<i class="fas fa-calendar-day fa-2x modal-form-icon"></i>
+								<i class="fas fa-procedures fa-2x modal-form-icon"></i>
 							</div>
 							<div class="col-9">
 								<input type="text" class="form-control form-control-user"
-									id="insertCheckDate" name="checkDate" placeholder="점검일(추가 일자 자동 입력)" readonly>
+									id="insertMaxBed" name="maxBed" placeholder="최대 침상 수">
 							</div>
 						</div>
 
@@ -216,7 +216,7 @@ i.modal-form-icon {
 			role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="updateModalLabel">기기 정보 수정</h5>
+					<h5 class="modal-title" id="updateModalLabel">병실 정보 수정</h5>
 					<button class="close" type="button" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">×</span>
@@ -227,24 +227,24 @@ i.modal-form-icon {
 						id="updateForm">
 
 						<input type="hidden" id="updateTarget" name="target"
-							value="device">
+							value="room">
 
 						<div class="row mb-3">
 							<div class="col-3 text-center">
-								<i class="fas fa-microchip fa-2x modal-form-icon"></i>
+								<i class="fas fa-door-closed fa-2x modal-form-icon"></i>
 							</div>
 							<div class="col-9">
 								<input type="text" class="form-control form-control-user"
-									id="updateDeviceID" name="deviceID" placeholder="기기번호" readonly>
+									id="updateRoomNo" name="roomNo" placeholder="병실번호">
 							</div>
 						</div>
 						<div class="row mb-3">
 							<div class="col-3 text-center">
-								<i class="fas fa-calendar-day fa-2x modal-form-icon"></i>
+								<i class="fas fa-procedures fa-2x modal-form-icon"></i>
 							</div>
 							<div class="col-9">
 								<input type="text" class="form-control form-control-user"
-									id="updateCheckDate" name="checkDate" placeholder="점검일">
+									id="updateMaxBed" name="maxBed" placeholder="최대 병상 수">
 							</div>
 						</div>
 					</form>
@@ -267,7 +267,7 @@ i.modal-form-icon {
 			role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="deleteModalLabel">기기 정보 삭제</h5>
+					<h5 class="modal-title" id="deleteModalLabel">병실 정보 삭제</h5>
 					<button class="close" type="button" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">×</span>
@@ -278,15 +278,15 @@ i.modal-form-icon {
 						id="deleteForm">
 
 						<input type="hidden" id="deleteTarget" name="target"
-							value="device">
+							value="room">
 
 						<div class="row mb-3">
 							<div class="col-3 text-center">
-								<i class="fas fa-microchip fa-2x modal-form-icon"></i>
+								<i class="fas fa-door-closed fa-2x modal-form-icon"></i>
 							</div>
 							<div class="col-9">
 								<input type="text" class="form-control form-control-user"
-									id="deleteDeviceID" name="deviceID" placeholder="기기번호" readonly>
+									id="deleteRoomNo" name="roomNo" placeholder="병실번호" readonly>
 							</div>
 						</div>
 					</form>
@@ -327,22 +327,22 @@ i.modal-form-icon {
 		$('[data-target="#modalUpdateForm"]').on(
 				"click",
 				function() {
-					var deviceID = $(this).closest('tr')
+					var roomNo = $(this).closest('tr')
 							.find('td:nth-child(1)').text();
-					var checkDate = $(this).closest('tr').find(
+					var mexBed = $(this).closest('tr').find(
 							'td:nth-child(2)').text();
 
-					$(".modal-body #updateDeviceID").val(deviceID);
-					$(".modal-body #updateCheckDate").val(checkDate);
+					$(".modal-body #updateRoomNo").val(roomNo);
+					$(".modal-body #updateMaxBed").val(maxBed);
 				});
 
 		$('[data-target="#modalDelete"]').on(
 				"click",
 				function() {
-					var deviceID = $(this).closest('tr')
+					var roomNo = $(this).closest('tr')
 							.find('td:nth-child(1)').text();
 
-					$(".modal-body #deleteDeviceID").val(deviceID);
+					$(".modal-body #deleteRoomNo").val(roomNo);
 				});
 	</script>
 </body>
