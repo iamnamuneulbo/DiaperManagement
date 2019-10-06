@@ -201,7 +201,7 @@ i.modal-form-icon {
 				<div class="modal-footer">
 					<button class="btn btn-secondary" type="button"
 						data-dismiss="modal">취소</button>
-					<button class="btn btn-success" id="insertBtn" type="submit"
+					<button class="btn btn-primary" id="insertBtn" type="submit"
 						form="insertForm">추가</button>
 				</div>
 			</div>
