@@ -43,30 +43,42 @@
 							<tbody>
 								<%
 									request.setCharacterEncoding("UTF-8");
-
+								
+									ArrayList<DeviceVal> valueList = new ArrayList<DeviceVal>();
 									DeviceValDAO deviceValDAO3 = new DeviceValDAO();
 									PatientInfoDAO patientInfoDAO3 = new PatientInfoDAO();
 									ArrayList<String> RDList = patientInfoDAO3.getRoomDeviceList(pageRoomNo);
 
-									String deviceID, dataTime, tag, img, userName, ststeText;
+									String dataTime, tag, img, userName, ststeText;
+									int valueCnt, userID;
 									int temperature, humidity, gas;
+									int sumTemp, sumHumi, sumGas;
+									int avgTemp, avgHumi, avgGas;
 
-									for (String rs : RDList) {
-										DeviceVal deviceVal = deviceValDAO3.getValue(rs);
-
-										deviceID = deviceVal.getDeviceID();
-										dataTime = deviceVal.getDatatime();
-										temperature = deviceVal.getTemperature();
-										humidity = deviceVal.getHumidity();
-										gas = deviceVal.getGas();
+									for (String deviceID : RDList) {
+										userID = patientInfoDAO3.getUserID(deviceID);
 										userName = patientInfoDAO3.getUserName(deviceID);
+										valueList = deviceValDAO3.getValueList(deviceID, userID);
+										valueCnt = valueList.size();
+										sumTemp = 0;
+										sumHumi = 0;
+										sumGas = 0;
+										for (DeviceVal deviceVal : valueList) {
+											sumTemp += deviceVal.getTemperature();
+											sumHumi += deviceVal.getHumidity();
+											sumGas += deviceVal.getGas();
+										}
+										avgTemp = sumTemp / valueCnt;
+										avgHumi = sumHumi / valueCnt;
+										avgGas = sumGas / valueCnt;
+										
 								%>
 								<tr>
 									<td><%=userName%></td>
-									<td><%=temperature%></td>
-									<td><%=humidity%></td>
-									<td><%=gas%></td>
-									<td><%=dataTime%></td>
+									<td><%=avgTemp%></td>
+									<td><%=avgHumi%></td>
+									<td><%=avgGas%></td>
+									<td>(추후 수정)</td>
 								</tr>
 								<%
 									}

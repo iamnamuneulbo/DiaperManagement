@@ -2,6 +2,7 @@ package device;
 
 public class DeviceVal {
 	private String deviceID;
+	private int userID;
 	private String datatime;
 	private int temperature;
 	private int humidity;
@@ -14,6 +15,12 @@ public class DeviceVal {
 	}
 	public void setDeviceID(String deviceID) {
 		this.deviceID = deviceID;
+	}
+	public int getUserID() {
+		return userID;
+	}
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
 	public String getDatatime() {
 		return datatime;

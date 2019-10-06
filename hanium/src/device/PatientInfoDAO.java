@@ -104,6 +104,24 @@ public class PatientInfoDAO {
 		}
 		return userName;
 	}
+	
+	public int getUserID(String deviceID) {
+		int userID = 0;
+		String SQL = "SELECT userID FROM patient WHERE deviceID = " + deviceID;
+
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				userID = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return userID;
+	}
 
 	public void update(String roomNo, int bedNo, String deviceID, int userID) {
 		String SQL = "UPDATE patient SET roomNo=?, bedNo=?, deviceID=? WHERE userID=?";
