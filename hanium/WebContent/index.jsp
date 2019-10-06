@@ -84,23 +84,34 @@
 							String roomNo, active = "";
 							int maxBed, cnt;
 
-							int state, roomCnt = 0;
-							String roomState = "success";
+							int roomCnt = 0, stateVal;
+							String roomState;
 							for (Room rs : roomList2) {
 								roomNo = rs.getRoomNo();
 								maxBed = rs.getMaxBed();
 
+								ArrayList<Integer> stateList = new ArrayList<Integer>();
+								stateVal = 0;
+								roomState = "success";
+								
 								ArrayList<String> RDList = patientInfoDAO2.getRoomDeviceList(roomNo);
 								cnt = RDList.size();
-								for (String device : RDList) {
-									state = deviceValDAO2.getState(device);
-									if (state == 0) {
-										roomState = "success";
-									} else if (state == 1) {
-										roomState = "warning";
-									} else {
+
+								for (String deviceID : RDList) {
+									stateVal = deviceValDAO2.getState(deviceID);
+									if (stateVal == 2) {
 										roomState = "danger";
 										break;
+									}
+									stateList.add(stateVal);
+								}
+
+								if (stateVal != 2) {
+									for (int value : stateList) {
+										if (value == 1) {
+											roomState = "warning";
+											break;
+										}
 									}
 								}
 						%>
@@ -185,7 +196,7 @@
 		var pop_timer;
 
 		$(document).ready(function() {
-			$('[data-toggle="popover"]').popover();			
+			$('[data-toggle="popover"]').popover();
 		});
 
 		$('[data-toggle="popover"]').on('click', function(e) {
