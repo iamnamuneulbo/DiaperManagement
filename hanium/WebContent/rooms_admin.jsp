@@ -201,7 +201,7 @@ i.modal-form-icon {
 				<div class="modal-footer">
 					<button class="btn btn-secondary" type="button"
 						data-dismiss="modal">취소</button>
-					<button class="btn btn-success" id="insertBtn" type="submit"
+					<button class="btn btn-primary" id="insertBtn" type="submit"
 						form="insertForm">추가</button>
 				</div>
 			</div>
@@ -329,9 +329,8 @@ i.modal-form-icon {
 				function() {
 					var roomNo = $(this).closest('tr')
 							.find('td:nth-child(1)').text();
-					var mexBed = $(this).closest('tr').find(
+					var maxBed = $(this).closest('tr').find(
 							'td:nth-child(2)').text();
-
 					$(".modal-body #updateRoomNo").val(roomNo);
 					$(".modal-body #updateMaxBed").val(maxBed);
 				});
