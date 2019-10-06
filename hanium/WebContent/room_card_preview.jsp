@@ -56,11 +56,11 @@
 				}
 
 				while ((cardCnt + 1) != bedNo) { // 카드 위치와 침대 위치가 일치하지 않으면 빈 공간 출력
+					cardCnt++;
 		%>
 		<div class="col-5 mb-4"></div>
 		<%
-			cardCnt++;
-					if (cardCnt % 2 == 1) {
+			if (cardCnt % 2 == 1) {
 		%>
 		<div class="col-2 mb-4"></div>
 		<%
@@ -72,21 +72,22 @@
 			<div class="card bg-<%=tag%> shadow mb-2">
 				<div class="card-header bg-<%=tag%> py-2">
 					<h6 class="m-0 font-weight-bold text-gray-100">
-							<i class="fas fa-procedures"></i> [<%=bedNo%>] | 
-							<i class="fas fa-user"></i> <%=userName%> | 
-							<i class="fas fa-microchip"></i> [<%=deviceID%>]
+						<i class="fas fa-procedures"></i> [<%=bedNo%>] | <i
+							class="fas fa-user"></i>
+						<%=userName%>
+						| <i class="fas fa-microchip"></i> [<%=deviceID%>]
 					</h6>
 				</div>
 				<div class="card-body text-gray-100 py-2">
 					<h4 class="card-title d-inline align-middle"><%=ststeText%></h4>
 					<i class="<%=img%> fa-3x float-right"></i>
 					<p class="card-text">
-							<br /> <i class="fas fa-fw fa-thermometer-half"></i> 온도<span
-								class="float-right"><%=temperature%></span><br> <i
-								class="fas fa-fw fa-tint"></i> 습도<span class="float-right"><%=humidity%></span><br>
-							<i class="fas fa-fw fa-wind"></i> 가스<span class="float-right"><%=gas%></span><br>
-							<span class="float-right"><%=dataTimeF%></span>
-						</p>
+						<br /> <i class="fas fa-fw fa-thermometer-half"></i> 온도<span
+							class="float-right"><%=temperature%></span><br> <i
+							class="fas fa-fw fa-tint"></i> 습도<span class="float-right"><%=humidity%></span><br>
+						<i class="fas fa-fw fa-wind"></i> 가스<span class="float-right"><%=gas%></span><br>
+						<span class="float-right"><%=dataTimeF%></span>
+					</p>
 				</div>
 			</div>
 		</div>

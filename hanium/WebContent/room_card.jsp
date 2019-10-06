@@ -57,11 +57,11 @@
 					}
 
 					while ((cardCnt + 1) != bedNo) { // 카드 위치와 침대 위치가 일치하지 않으면 빈 공간 출력
+						cardCnt++;
 			%>
 			<div class="col-5 mb-4"></div>
 			<%
-				cardCnt++;
-						if (cardCnt % 2 == 1) {
+				if (cardCnt % 2 == 1) {
 			%>
 			<div class="col-2 mb-4"></div>
 			<%
