@@ -41,18 +41,19 @@ public class DeviceValDAO {
 		return ""; // DB 오류
 	}
 
-	public int insert(String deviceID, int temperature, int humidity, int gas, int state) {
-		String SQL = "INSERT INTO deviceVal VALUES(?, ?, ?, ?, ?, ?, NULL)";
+	public int insert(String deviceID, int userID, int temperature, int humidity, int gas, int state) {
+		String SQL = "INSERT INTO deviceVal VALUES(?, ?, ?, ?, ?, ?, ?, NULL)";
 
 		try {
 			pstmt = conn.prepareStatement(SQL);
 
 			pstmt.setString(1, deviceID);
-			pstmt.setString(2, getDate());
-			pstmt.setInt(3, temperature);
-			pstmt.setInt(4, humidity);
-			pstmt.setInt(5, gas);
-			pstmt.setInt(6, state);
+			pstmt.setInt(2, userID);
+			pstmt.setString(3, getDate());
+			pstmt.setInt(4, temperature);
+			pstmt.setInt(5, humidity);
+			pstmt.setInt(6, gas);
+			pstmt.setInt(7, state);
 
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -70,14 +71,47 @@ public class DeviceValDAO {
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
+			
 			while (rs.next()) {
 				DeviceVal deviceVal = new DeviceVal();
 				deviceVal.setDeviceID(rs.getString(1));
-				deviceVal.setDatatime(rs.getString(2));
-				deviceVal.setTemperature(rs.getInt(3));
-				deviceVal.setHumidity(rs.getInt(4));
-				deviceVal.setGas(rs.getInt(5));
-				deviceVal.setValueID(rs.getInt(6));
+				deviceVal.setUserID(rs.getInt(2));
+				deviceVal.setDatatime(rs.getString(3));
+				deviceVal.setTemperature(rs.getInt(4));
+				deviceVal.setHumidity(rs.getInt(5));
+				deviceVal.setGas(rs.getInt(6));
+				deviceVal.setState(rs.getInt(7));
+				deviceVal.setValueID(rs.getInt(8));
+				list.add(deviceVal);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return list;
+	}
+	
+	public ArrayList<DeviceVal> getValueList(String deviceID, int userID) {
+		String SQL = "SELECT * FROM deviceVal WHERE deviceID=? AND userID=? ORDER BY DATATIME DESC";
+		ArrayList<DeviceVal> list = new ArrayList<DeviceVal>();
+
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, deviceID);
+			pstmt.setInt(2, userID);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				DeviceVal deviceVal = new DeviceVal();
+				deviceVal.setDeviceID(rs.getString(1));
+				deviceVal.setUserID(rs.getInt(2));
+				deviceVal.setDatatime(rs.getString(3));
+				deviceVal.setTemperature(rs.getInt(4));
+				deviceVal.setHumidity(rs.getInt(5));
+				deviceVal.setGas(rs.getInt(6));
+				deviceVal.setState(rs.getInt(7));
+				deviceVal.setValueID(rs.getInt(8));
 				list.add(deviceVal);
 			}
 		} catch (Exception e) {
@@ -97,12 +131,13 @@ public class DeviceValDAO {
 			rs = pstmt.executeQuery();
 			rs.next();
 			deviceVal.setDeviceID(rs.getString(1));
-			deviceVal.setDatatime(rs.getString(2));
-			deviceVal.setTemperature(rs.getInt(3));
-			deviceVal.setHumidity(rs.getInt(4));
-			deviceVal.setGas(rs.getInt(5));
-			deviceVal.setState(rs.getInt(6));
-			deviceVal.setValueID(rs.getInt(7));
+			deviceVal.setUserID(rs.getInt(2));
+			deviceVal.setDatatime(rs.getString(3));
+			deviceVal.setTemperature(rs.getInt(4));
+			deviceVal.setHumidity(rs.getInt(5));
+			deviceVal.setGas(rs.getInt(6));
+			deviceVal.setState(rs.getInt(7));
+			deviceVal.setValueID(rs.getInt(8));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -110,6 +145,7 @@ public class DeviceValDAO {
 		}
 		return deviceVal;
 	}
+	
 
 	public int getState(String deviceID) {
 		String SQL = "SELECT state FROM deviceVal WHERE deviceID=" + deviceID + " ORDER BY DATATIME DESC LIMIT 1";

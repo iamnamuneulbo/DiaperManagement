@@ -3,6 +3,7 @@
 <%@ page import="device.DeviceValDAO"%>
 <%@ page import="device.DeviceInfoDAO"%>
 <%@ page import="device.RoomDAO"%>
+<%@ page import="device.PatientInfoDAO"%>
 <%@ page import="java.io.PrintWriter"%>
 
 <%
@@ -46,7 +47,9 @@
 		}
 
 		DeviceValDAO deviceValDAO = new DeviceValDAO();
-		int res = deviceValDAO.insert(deviceID, intTemp, intHumi, intGas, state);
+		PatientInfoDAO patientInfoDAO = new PatientInfoDAO();
+		int userID = patientInfoDAO.getUserID(deviceID);
+		int res = deviceValDAO.insert(deviceID, userID, intTemp, intHumi, intGas, state);
 
 		PrintWriter script = response.getWriter();
 
