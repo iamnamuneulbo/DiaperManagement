@@ -49,11 +49,12 @@ public class PatientInfoDAO {
 	}
 
 	public ArrayList<PatientInfo> getRoomDeviceBed(String roomNo) {
-		String SQL = "SELECT deviceID, bedNo FROM patient WHERE roomNo=" + roomNo + " ORDER BY bedNo";
+		String SQL = "SELECT deviceID, bedNo FROM patient WHERE roomNo=? ORDER BY bedNo";
 		ArrayList<PatientInfo> list = new ArrayList<PatientInfo>();
 
 		try {
 			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, roomNo);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				PatientInfo patientInfo = new PatientInfo();
@@ -70,11 +71,12 @@ public class PatientInfoDAO {
 	}
 
 	public ArrayList<String> getRoomDeviceList(String roomNo) {
-		String SQL = "SELECT deviceID FROM patient WHERE roomNo=" + roomNo + " ORDER BY bedNo";
+		String SQL = "SELECT deviceID FROM patient WHERE roomNo=? ORDER BY bedNo";
 		ArrayList<String> list = new ArrayList<String>();
 
 		try {
 			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, roomNo);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				list.add(rs.getString(1));
@@ -89,10 +91,11 @@ public class PatientInfoDAO {
 
 	public String getUserName(String deviceID) {
 		String userName = null;
-		String SQL = "SELECT userName FROM patient WHERE deviceID = " + deviceID;
+		String SQL = "SELECT userName FROM patient WHERE deviceID=?";
 
 		try {
 			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, deviceID);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				userName = rs.getString(1);
@@ -107,10 +110,11 @@ public class PatientInfoDAO {
 	
 	public int getUserID(String deviceID) {
 		int userID = 0;
-		String SQL = "SELECT userID FROM patient WHERE deviceID = " + deviceID;
+		String SQL = "SELECT userID FROM patient WHERE deviceID=?";
 
 		try {
 			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, deviceID);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				userID = rs.getInt(1);

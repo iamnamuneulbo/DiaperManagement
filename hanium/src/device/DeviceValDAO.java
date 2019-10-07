@@ -71,37 +71,7 @@ public class DeviceValDAO {
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				DeviceVal deviceVal = new DeviceVal();
-				deviceVal.setDeviceID(rs.getString(1));
-				deviceVal.setUserID(rs.getInt(2));
-				deviceVal.setDatatime(rs.getString(3));
-				deviceVal.setTemperature(rs.getInt(4));
-				deviceVal.setHumidity(rs.getInt(5));
-				deviceVal.setGas(rs.getInt(6));
-				deviceVal.setState(rs.getInt(7));
-				deviceVal.setValueID(rs.getInt(8));
-				list.add(deviceVal);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-		return list;
-	}
-	
-	public ArrayList<DeviceVal> getValueList(String deviceID, int userID) {
-		String SQL = "SELECT * FROM deviceVal WHERE deviceID=? AND userID=? ORDER BY DATATIME DESC";
-		ArrayList<DeviceVal> list = new ArrayList<DeviceVal>();
 
-		try {
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, deviceID);
-			pstmt.setInt(2, userID);
-
-			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				DeviceVal deviceVal = new DeviceVal();
 				deviceVal.setDeviceID(rs.getString(1));
@@ -122,12 +92,34 @@ public class DeviceValDAO {
 		return list;
 	}
 
-	public DeviceVal getValue(String deviceID) {
-		String SQL = "SELECT * FROM deviceVal WHERE deviceID=" + deviceID + " ORDER BY DATATIME DESC LIMIT 1";
+	public DeviceVal getAvgValue(int userID) {
+		String SQL = "SELECT AVG(deviceVal.temperature), AVG(deviceVal.humidity), AVG(deviceVal.gas) FROM deviceVal, patient WHERE patient.userID=?";
 		DeviceVal deviceVal = new DeviceVal();
 
 		try {
 			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, userID);
+
+			rs = pstmt.executeQuery();
+			rs.next();
+			deviceVal.setTemperature(rs.getInt(1));
+			deviceVal.setHumidity(rs.getInt(2));
+			deviceVal.setGas(rs.getInt(3));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return deviceVal;
+	}
+
+	public DeviceVal getValue(String deviceID) {
+		String SQL = "SELECT * FROM deviceVal WHERE deviceID=? ORDER BY DATATIME DESC LIMIT 1";
+		DeviceVal deviceVal = new DeviceVal();
+
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, deviceID);
 			rs = pstmt.executeQuery();
 			rs.next();
 			deviceVal.setDeviceID(rs.getString(1));
@@ -145,14 +137,14 @@ public class DeviceValDAO {
 		}
 		return deviceVal;
 	}
-	
 
 	public int getState(String deviceID) {
-		String SQL = "SELECT state FROM deviceVal WHERE deviceID=" + deviceID + " ORDER BY DATATIME DESC LIMIT 1";
+		String SQL = "SELECT state FROM deviceVal WHERE deviceID=? ORDER BY DATATIME DESC LIMIT 1";
 		int state = -1;
 
 		try {
 			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, deviceID);
 			rs = pstmt.executeQuery();
 			rs.next();
 			state = rs.getInt(1);
@@ -163,7 +155,25 @@ public class DeviceValDAO {
 		}
 		return state;
 	}
-	
+
+	public int getRoomState(String roomNo) {
+		String SQL = "SELECT MAX(state) FROM deviceVal WHERE (userID, datatime) IN (SELECT userID, MAX(datatime) FROM deviceVal GROUP BY userID HAVING userID IN (SELECT DISTINCT patient.userID FROM deviceVal, patient WHERE patient.roomNO=?)) ORDER BY datatime DESC";
+		int state = -1;
+
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, roomNo);
+			rs = pstmt.executeQuery();
+			rs.next();
+			state = rs.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return state;
+	}
+
 	private void close() {
 		try {
 			if (rs != null)
