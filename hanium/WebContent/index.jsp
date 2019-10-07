@@ -89,17 +89,17 @@
 							for (Room rs : roomList2) {
 								roomNo = rs.getRoomNo();
 								maxBed = rs.getMaxBed();
-								
+
 								state = deviceValDAO2.getRoomState(roomNo);
-								
+
 								if (state == 0) {
 									roomState = "success";
 								} else if (state == 1) {
-									roomState = "warning";		
+									roomState = "warning";
 								} else {
 									roomState = "danger";
 								}
-								
+
 								ArrayList<String> RDList = patientInfoDAO2.getRoomDeviceList(roomNo);
 								cnt = RDList.size();
 						%>
