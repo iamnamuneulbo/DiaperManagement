@@ -84,36 +84,24 @@
 							String roomNo, active = "";
 							int maxBed, cnt;
 
-							int roomCnt = 0, stateVal;
+							int roomCnt = 0, state;
 							String roomState;
 							for (Room rs : roomList2) {
 								roomNo = rs.getRoomNo();
 								maxBed = rs.getMaxBed();
-
-								ArrayList<Integer> stateList = new ArrayList<Integer>();
-								stateVal = 0;
-								roomState = "success";
+								
+								state = deviceValDAO2.getRoomState(roomNo);
+								
+								if (state == 0) {
+									roomState = "success";
+								} else if (state == 1) {
+									roomState = "warning";		
+								} else {
+									roomState = "danger";
+								}
 								
 								ArrayList<String> RDList = patientInfoDAO2.getRoomDeviceList(roomNo);
 								cnt = RDList.size();
-
-								for (String deviceID : RDList) {
-									stateVal = deviceValDAO2.getState(deviceID);
-									if (stateVal == 2) {
-										roomState = "danger";
-										break;
-									}
-									stateList.add(stateVal);
-								}
-
-								if (stateVal != 2) {
-									for (int value : stateList) {
-										if (value == 1) {
-											roomState = "warning";
-											break;
-										}
-									}
-								}
 						%>
 						<article id="<%=roomNo%>" class="col-5 mb-4" data-toggle="popover"
 							data-placement="right" data-html="true" title="<%=roomNo%>호"
@@ -198,13 +186,20 @@
 		$(document).ready(function() {
 			$('[data-toggle="popover"]').popover();
 		});
-
 		$('[data-toggle="popover"]').on('click', function(e) {
 			clearTimeout(pop_timer);
 			$('[data-toggle="popover"]').not(this).popover('hide');
 			pop_timer = setTimeout(function() {
 				$('[data-toggle="popover"]').popover('hide');
 			}, 2000);
+		});
+		$("html").on("mouseup", function(e) {
+			var l = $(e.target);
+			if (l[0].className.indexOf("popover") == -1) {
+				$(".popover").each(function() {
+					$(this).popover("hide");
+				});
+			}
 		});
 	</script>
 </body>
