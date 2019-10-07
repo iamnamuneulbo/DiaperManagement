@@ -93,7 +93,7 @@ public class DeviceValDAO {
 	}
 
 	public DeviceVal getAvgValue(int userID) {
-		String SQL = "SELECT AVG(deviceVal.temperature), AVG(deviceVal.humidity), AVG(deviceVal.gas) FROM deviceVal, patient WHERE patient.userID=?";
+		String SQL = "SELECT AVG(deviceVal.temperature), AVG(deviceVal.humidity), AVG(deviceVal.gas) FROM deviceVal, patient WHERE deviceVal.userID=? AND patient.deviceID = deviceVal.deviceID";
 		DeviceVal deviceVal = new DeviceVal();
 
 		try {
