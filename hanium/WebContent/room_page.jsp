@@ -138,6 +138,7 @@
 			<script>
 				$(document).ready(function() {
 					$('table.display').DataTable();
+					.dataTables_filter input { width: 100px }
 				});
 			</script>
 
