@@ -4,6 +4,7 @@
 <%@ page import="device.DeviceInfoDAO"%>
 <%@ page import="device.RoomDAO"%>
 <%@ page import="device.PatientInfoDAO"%>
+<%@ page import="device.DeviceRecDAO"%>
 <%@ page import="java.io.PrintWriter"%>
 
 <%
@@ -43,6 +44,11 @@
 		} else {
 			script.println(res);
 		}
+	} else if (target.equals("record")) {
+		String deviceID = request.getParameter("deviceID");
+		DeviceRecDAO deviceRecDAO = new DeviceRecDAO();
+		deviceRecDAO.insert(deviceID);
+		
 	} else if (target.equals("device")) {
 		String deviceID = request.getParameter("deviceID");
 		DeviceInfoDAO deviceInfoDAO = new DeviceInfoDAO();
