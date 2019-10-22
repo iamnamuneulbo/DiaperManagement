@@ -14,7 +14,7 @@ public class PatientInfoDAO {
 
 	public PatientInfoDAO() {
 		try {
-			String dbURL = "jdbc:mysql://3.13.163.79:3306/han_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul";
+			String dbURL = "jdbc:mysql://3.13.163.79:3306/han_db?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul";
 			String dbID = "admin";
 			String dbPassword = "ifnt0719";
 			Class.forName("com.mysql.cj.jdbc.Driver");

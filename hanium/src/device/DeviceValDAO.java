@@ -14,7 +14,7 @@ public class DeviceValDAO {
 
 	public DeviceValDAO() { // 생성자 실행될때마다 자동으로 db연결이 이루어 질 수 있도록함
 		try {
-			String dbURL = "jdbc:mysql://3.13.163.79:3306/han_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul";
+			String dbURL = "jdbc:mysql://3.13.163.79:3306/han_db?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul";
 			String dbID = "admin";
 			String dbPassword = "ifnt0719";
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -28,15 +28,15 @@ public class DeviceValDAO {
 	public String getDate() {
 		String SQL = "SELECT NOW()";
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			rs = pstmt.executeQuery();
+			PreparedStatement pstmt2 = conn.prepareStatement(SQL);
+			rs = pstmt2.executeQuery();
 			if (rs.next()) {
 				return rs.getString(1);
 			}
+			rs.close();
+			pstmt2.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			close();
 		}
 		return ""; // DB 오류
 	}
