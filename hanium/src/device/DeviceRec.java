@@ -2,7 +2,7 @@ package device;
 
 public class DeviceRec {
 	private String deviceID;
-	private String userID;
+	private int userID;
 	private String datatime;
 	
 	public String getDeviceID() {
@@ -11,10 +11,10 @@ public class DeviceRec {
 	public void setDeviceID(String deviceID) {
 		this.deviceID = deviceID;
 	}
-	public String getUserID() {
+	public int getUserID() {
 		return userID;
 	}
-	public void setUserID(String userID) {
+	public void setUserID(int userID) {
 		this.userID = userID;
 	}
 	public String getDatatime() {

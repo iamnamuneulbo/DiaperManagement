@@ -20,7 +20,7 @@
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
-					<table class="table table-bordered display" id="dataTable"
+					<table class="table table-bordered display" id="room-statistic-table"
 						width="100%" cellspacing="0">
 						<thead>
 							<tr>
