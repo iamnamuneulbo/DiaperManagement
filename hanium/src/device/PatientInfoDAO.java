@@ -107,7 +107,24 @@ public class PatientInfoDAO {
 		}
 		return userName;
 	}
-	
+	public String getUserName(int userID) {
+		String userName = null;
+		String SQL = "SELECT userName FROM patient WHERE userID=?";
+
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, userID);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				userName = rs.getString(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return userName;
+	}
 	public int getUserID(String deviceID) {
 		int userID = 0;
 		String SQL = "SELECT userID FROM patient WHERE deviceID=?";

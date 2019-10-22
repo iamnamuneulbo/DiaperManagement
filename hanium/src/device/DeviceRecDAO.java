@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DeviceRecDAO {
 	private Connection conn;
@@ -54,6 +55,31 @@ public class DeviceRecDAO {
 		} finally {
 			close();
 		}
+	}
+	public ArrayList<DeviceRec> getRoomRec(String roomNo) {
+		PatientInfoDAO patientInfoDAO = new PatientInfoDAO();
+		ArrayList<String> RDList = patientInfoDAO.getRoomDeviceList(roomNo);
+		String devices = String.join(", ", RDList);
+		
+		String SQL = "SELECT deviceID, userID, datatime FROM deviceRec WHERE deviceID IN(" + devices + ") ORDER BY datatime DESC";
+		ArrayList<DeviceRec> list = new ArrayList<DeviceRec>();
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				DeviceRec deviceRec = new DeviceRec();
+				deviceRec.setDeviceID(rs.getString(1));
+				deviceRec.setUserID(rs.getInt(2));
+				deviceRec.setDatatime(rs.getString(3));
+				
+				list.add(deviceRec);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return list;
 	}
 	private void close() {
 		try {

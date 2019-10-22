@@ -137,7 +137,9 @@
 
 			<script>
 				$(document).ready(function() {
-					$('table.display').DataTable();
+					$('table.display').DataTable({
+						"order": []
+					});
 					$('.dataTables_filter input').css({ 'width': '100px' });
 				});
 			</script>
