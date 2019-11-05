@@ -47,16 +47,14 @@
 								ArrayList<DeviceVal> valueList = new ArrayList<DeviceVal>();
 								DeviceValDAO deviceValDAO3 = new DeviceValDAO();
 								PatientInfoDAO patientInfoDAO3 = new PatientInfoDAO();
-								ArrayList<String> RDList = patientInfoDAO3.getRoomDeviceList(pageRoomNo);
+								ArrayList<Integer> RUList = patientInfoDAO3.getRoomUserList(pageRoomNo);
 
 								String dataTime, tag, img, userName, ststeText;
-								int userID;
 								int temperature, humidity, gas;
 								int avgTemp, avgHumi, avgGas;
 
-								for (String deviceID : RDList) {
-									userID = patientInfoDAO3.getUserID(deviceID);
-									userName = patientInfoDAO3.getUserName(deviceID);
+								for (int userID : RUList) {
+									userName = patientInfoDAO3.getUserName(userID);
 
 									DeviceVal deviceVal = deviceValDAO3.getAvgValue(userID);
 									avgTemp = deviceVal.getTemperature();

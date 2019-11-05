@@ -100,8 +100,8 @@
 									roomState = "danger";
 								}
 
-								ArrayList<String> RDList = patientInfoDAO2.getRoomDeviceList(roomNo);
-								cnt = RDList.size();
+								ArrayList<Integer> RUList = patientInfoDAO2.getRoomUserList(roomNo);
+								cnt = RUList.size();
 						%>
 						<article id="<%=roomNo%>" class="col-5 mb-4" data-toggle="popover"
 							data-placement="right" data-html="true" title="<%=roomNo%>호"

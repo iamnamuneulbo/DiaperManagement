@@ -58,10 +58,11 @@ public class DeviceRecDAO {
 	}
 	public ArrayList<DeviceRec> getRoomRec(String roomNo) {
 		PatientInfoDAO patientInfoDAO = new PatientInfoDAO();
-		ArrayList<String> RDList = patientInfoDAO.getRoomDeviceList(roomNo);
-		String devices = String.join(", ", RDList);
+		ArrayList<Integer> userList = patientInfoDAO.getRoomUserList(roomNo);
+		String userID = userList.toString();
+		userID = userID.substring(1, userID.length()-1);
 		
-		String SQL = "SELECT deviceID, userID, datatime FROM deviceRec WHERE deviceID IN(" + devices + ") ORDER BY datatime DESC";
+		String SQL = "SELECT deviceID, userID, datatime FROM deviceRec WHERE userID IN(" + userID + ") ORDER BY datatime DESC";
 		ArrayList<DeviceRec> list = new ArrayList<DeviceRec>();
 		try {
 			pstmt = conn.prepareStatement(SQL);
