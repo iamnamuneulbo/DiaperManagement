@@ -70,16 +70,16 @@ public class PatientInfoDAO {
 		return list;
 	}
 
-	public ArrayList<String> getRoomDeviceList(String roomNo) {
-		String SQL = "SELECT deviceID FROM patient WHERE roomNo=? ORDER BY bedNo";
-		ArrayList<String> list = new ArrayList<String>();
+	public ArrayList<Integer> getRoomUserList(String roomNo) {
+		String SQL = "SELECT userID FROM patient WHERE roomNo=? ORDER BY bedNo";
+		ArrayList<Integer> list = new ArrayList<Integer>();
 
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, roomNo);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				list.add(rs.getString(1));
+				list.add(rs.getInt(1));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -142,6 +142,23 @@ public class PatientInfoDAO {
 			close();
 		}
 		return userID;
+	}
+	public String getDeviceID(int userID) {
+		String SQL = "SELECT deviceID FROM patient WHERE userID=?";
+		String deviceID = "";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, userID);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				deviceID = rs.getString(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return deviceID;
 	}
 
 	public void update(String roomNo, int bedNo, String deviceID, int userID) {

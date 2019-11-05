@@ -65,8 +65,8 @@
 								roomNo = rs.getRoomNo();
 								maxBed = rs.getMaxBed();
 
-								ArrayList<String> RDList = patientInfoDAO.getRoomDeviceList(roomNo);
-								cnt = RDList.size();
+								ArrayList<Integer> RUList = patientInfoDAO.getRoomUserList(roomNo);
+								cnt = RUList.size();
 						%>
 						<a class="collapse-item"
 							href="/hanium/room_page.jsp?roomNo=<%=roomNo%>"><%=roomNo%>호(<%=cnt%>/<%=maxBed%>)</a>
