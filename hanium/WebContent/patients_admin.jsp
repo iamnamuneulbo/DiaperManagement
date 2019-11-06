@@ -114,7 +114,6 @@ i.modal-form-icon {
 											for (PatientInfo rs : patientList) {
 										%>
 										<tr>
-											<td><%=rs.getUserID()%></td>
 											<td><%=rs.getUserName()%></td>
 											<td><%=rs.getDeviceID()%></td>
 											<td><%=rs.getRoomNo()%></td>
