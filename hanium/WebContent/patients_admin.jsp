@@ -112,8 +112,10 @@ i.modal-form-icon {
 											ArrayList<PatientInfo> patientList = patientInfoDAO.getList();
 
 											for (PatientInfo rs : patientList) {
+												int userID = rs.getUserID();
 										%>
 										<tr>
+											<td><%=userID%></td>
 											<td><%=rs.getUserName()%></td>
 											<td><%=rs.getDeviceID()%></td>
 											<td><%=rs.getRoomNo()%></td>
