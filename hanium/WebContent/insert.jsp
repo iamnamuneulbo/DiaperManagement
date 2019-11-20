@@ -5,6 +5,8 @@
 <%@ page import="device.RoomDAO"%>
 <%@ page import="device.PatientInfoDAO"%>
 <%@ page import="device.DeviceRecDAO"%>
+<%@ page import="setting.Setting"%>
+<%@ page import="setting.SettingDAO"%>
 <%@ page import="java.io.PrintWriter"%>
 
 <%
@@ -12,21 +14,26 @@
 	String target = request.getParameter("target");
 
 	if (target.equals("deviceVal")) {
+		SettingDAO settingDAO = new SettingDAO();
+		Setting setting = settingDAO.getValue();
+		
 		String deviceID = request.getParameter("deviceID");
 		String temperature = request.getParameter("temperature");
 		String humidity = request.getParameter("humidity");
 		String gas = request.getParameter("gas");
+		
 		int state;
-
 		int intTemp = Integer.valueOf(temperature);
 		int intHumi = Integer.valueOf(humidity);
 		int intGas = Integer.valueOf(gas);
 
-		int sum = intTemp + intHumi + intGas;
-
-		if (sum > 60) {
+		int stdTemp = setting.getTemperature();
+		int stdHumi = setting.getHumidity();
+		int stdGas = setting.getGas();
+		
+		if (intTemp > stdTemp + 3 || intHumi > stdHumi + 5) {
 			state = 2;
-		} else if (sum > 40) {
+		} else if (intTemp > stdTemp || intHumi > stdHumi) {
 			state = 1;
 		} else {
 			state = 0;
