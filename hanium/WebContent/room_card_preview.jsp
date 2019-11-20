@@ -25,7 +25,8 @@
 			SimpleDateFormat sformat = new SimpleDateFormat("MM/dd HH:mm");
 
 			String deviceID, dataTime, dataTimeF, tag, img, userName, ststeText;
-			int temperature, humidity, gas, state = -1, cardCnt = 0, bedNo;
+			double temperature, humidity;
+			int gas, state = -1, cardCnt = 0, bedNo;
 
 			for (PatientInfo rs : RDList) {
 				DeviceVal deviceVal = deviceValDAO2.getValue(rs.getDeviceID()); // 기기 아이디-수집한 값 가져오기 

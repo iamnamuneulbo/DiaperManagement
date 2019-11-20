@@ -4,8 +4,8 @@ public class DeviceVal {
 	private String deviceID;
 	private int userID;
 	private String datatime;
-	private int temperature;
-	private int humidity;
+	private double temperature;
+	private double humidity;
 	private int gas;
 	private int state;
 	private int valueID;
@@ -28,16 +28,16 @@ public class DeviceVal {
 	public void setDatatime(String datatime) {
 		this.datatime = datatime;
 	}
-	public int getTemperature() {
+	public double getTemperature() {
 		return temperature;
 	}
-	public void setTemperature(int temperature) {
+	public void setTemperature(double temperature) {
 		this.temperature = temperature;
 	}
-	public int getHumidity() {
+	public double getHumidity() {
 		return humidity;
 	}
-	public void setHumidity(int humidity) {
+	public void setHumidity(double humidity) {
 		this.humidity = humidity;
 	}
 	public int getGas() {
