@@ -3,6 +3,7 @@
 <%@ page import="device.PatientInfoDAO"%>
 <%@ page import="device.DeviceInfoDAO"%>
 <%@ page import="device.RoomDAO"%>
+<%@ page import="setting.SettingDAO"%>
 
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -32,5 +33,13 @@
 		roomDAO.update(roomNo, intMaxBed);
 		
 		response.sendRedirect("rooms_admin.jsp");
+	} else if (target.equals("setting")) {
+		String temp = request.getParameter("temp");
+		String humi = request.getParameter("humi");
+		String gas = request.getParameter("gas");
+		SettingDAO settingDAO = new SettingDAO();
+		settingDAO.insert(Integer.valueOf(temp), Integer.valueOf(humi), Integer.valueOf(gas));
+		
+		response.sendRedirect("index.jsp");
 	}
 %>

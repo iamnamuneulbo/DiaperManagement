@@ -49,7 +49,7 @@
 		if (res == -1) {
 			script.println("입력실패");
 		} else {
-			script.println(res);
+			script.println(state);
 		}
 	} else if (target.equals("record")) {
 		String deviceID = request.getParameter("deviceID");
