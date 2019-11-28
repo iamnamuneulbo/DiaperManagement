@@ -14,9 +14,9 @@ public class DeviceRecDAO {
 
 	public DeviceRecDAO() { // 생성자 실행될때마다 자동으로 db연결이 이루어 질 수 있도록함
 		try {
-			String dbURL = "jdbc:mysql://3.13.163.79:3306/han_db?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul";
+			String dbURL = "jdbc:mysql://3.136.120.235:3306/han_db?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul";
 			String dbID = "admin";
-			String dbPassword = "ifnt0719";
+			String dbPassword = "Infinite0609!";
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
