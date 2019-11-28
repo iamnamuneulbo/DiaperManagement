@@ -50,16 +50,16 @@
 								ArrayList<Integer> RUList = patientInfoDAO3.getRoomUserList(pageRoomNo);
 
 								String dataTime, tag, img, userName, ststeText;
-								int temperature, humidity, gas;
-								int avgTemp, avgHumi, avgGas;
+								double temperature, humidity, avgTemp, avgHumi, avgGas;
+								int gas;
 
 								for (int userID : RUList) {
 									userName = patientInfoDAO3.getUserName(userID);
 
 									DeviceVal deviceVal = deviceValDAO3.getAvgValue(userID);
-									avgTemp = deviceVal.getTemperature();
-									avgHumi = deviceVal.getHumidity();
-									avgGas = deviceVal.getGas();
+									avgTemp = deviceVal.getTemperature() * 100 / 100.0;
+									avgHumi = deviceVal.getHumidity() * 100 / 100.0;
+									avgGas = deviceVal.getGas() * 100 / 100.0;
 							%>
 							<tr>
 								<td><%=userName%></td>

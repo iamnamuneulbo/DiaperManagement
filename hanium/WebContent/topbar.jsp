@@ -53,7 +53,7 @@
 							</div>
 							<div class="col-9">
 								<input type="text" class="form-control form-control-user"
-									id="updateHumi" name="temp" placeholder="기준 습도">
+									id="updateHumi" name="humi" placeholder="기준 습도">
 							</div>
 						</div>
 						<div class="row mb-3">
@@ -62,7 +62,7 @@
 							</div>
 							<div class="col-9">
 								<input type="text" class="form-control form-control-user"
-									id="updateGas" name="temp" placeholder="기준 가스">
+									id="updateGas" name="gas" placeholder="기준 가스">
 							</div>
 						</div>
 					</form>

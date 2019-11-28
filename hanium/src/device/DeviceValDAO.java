@@ -41,7 +41,7 @@ public class DeviceValDAO {
 		return ""; // DB 오류
 	}
 
-	public int insert(String deviceID, int userID, int temperature, int humidity, int gas, int state) {
+	public int insert(String deviceID, int userID, double temperature, double humidity, int gas, int state) {
 		String SQL = "INSERT INTO deviceVal VALUES(?, ?, ?, ?, ?, ?, ?, NULL)";
 
 		try {
@@ -50,8 +50,8 @@ public class DeviceValDAO {
 			pstmt.setString(1, deviceID);
 			pstmt.setInt(2, userID);
 			pstmt.setString(3, getDate());
-			pstmt.setInt(4, temperature);
-			pstmt.setInt(5, humidity);
+			pstmt.setDouble(4, temperature);
+			pstmt.setDouble(5, humidity);
 			pstmt.setInt(6, gas);
 			pstmt.setInt(7, state);
 
@@ -102,8 +102,8 @@ public class DeviceValDAO {
 
 			rs = pstmt.executeQuery();
 			rs.next();
-			deviceVal.setTemperature(rs.getInt(1));
-			deviceVal.setHumidity(rs.getInt(2));
+			deviceVal.setTemperature(rs.getDouble(1));
+			deviceVal.setHumidity(rs.getDouble(2));
 			deviceVal.setGas(rs.getInt(3));
 		} catch (Exception e) {
 			e.printStackTrace();

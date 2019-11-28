@@ -23,17 +23,17 @@
 		String gas = request.getParameter("gas");
 		
 		int state;
-		int intTemp = Integer.valueOf(temperature);
-		int intHumi = Integer.valueOf(humidity);
-		int intGas = Integer.valueOf(gas);
+		double numTemp = Double.valueOf(temperature);
+		double numHumi = Double.valueOf(humidity);
+		int numGas = Integer.valueOf(gas);
 
 		int stdTemp = setting.getTemperature();
 		int stdHumi = setting.getHumidity();
 		int stdGas = setting.getGas();
 		
-		if (intTemp > stdTemp + 3 || intHumi > stdHumi + 5) {
+		if (numTemp > stdTemp + 3 || numHumi > stdHumi + 5) {
 			state = 2;
-		} else if (intTemp > stdTemp || intHumi > stdHumi) {
+		} else if (numTemp > stdTemp || numHumi > stdHumi) {
 			state = 1;
 		} else {
 			state = 0;
@@ -42,7 +42,7 @@
 		DeviceValDAO deviceValDAO = new DeviceValDAO();
 		PatientInfoDAO patientInfoDAO = new PatientInfoDAO();
 		int userID = patientInfoDAO.getUserID(deviceID);
-		int res = deviceValDAO.insert(deviceID, userID, intTemp, intHumi, intGas, state);
+		int res = deviceValDAO.insert(deviceID, userID, numTemp, numHumi, numGas, state);
 
 		PrintWriter script = response.getWriter();
 
