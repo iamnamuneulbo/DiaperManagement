@@ -14,9 +14,9 @@ public class RoomDAO {
 
 	public RoomDAO() {
 		try {
-			String dbURL = "jdbc:mysql://3.13.163.79:3306/han_db?serverTimezone=Asia/Seoul";
+			String dbURL = "jdbc:mysql://3.136.120.235:3306/han_db?serverTimezone=Asia/Seoul";
 			String dbID = "admin";
-			String dbPassword = "ifnt0719";
+			String dbPassword = "Infinite0609!";
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
